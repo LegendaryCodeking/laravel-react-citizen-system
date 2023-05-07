@@ -1,9 +1,11 @@
 import React from 'react'
+import Menu from '../components/Menu'
 
 export default function Ticketing() {
   return (
-    <div>
-      <h1>Hello world 1</h1>
+    <div className='flex gap-3'>
+      <Menu/>
+      <h1>sadkjfh</h1>
     </div>
   )
 }
