@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function Ticketing() {
   return (
-    <div>Ticketing</div>
+    <div>
+      <h1>Hello world</h1>
+    </div>
   )
 }
