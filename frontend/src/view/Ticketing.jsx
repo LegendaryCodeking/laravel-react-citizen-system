@@ -1,7 +1,10 @@
 import React from 'react'
+import Menu from '../components/Menu'
 
 export default function Ticketing() {
   return (
-    <div>Ticketing</div>
+    <div>
+      <Menu/>
+    </div>
   )
 }

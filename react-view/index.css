@@ -68,5 +68,11 @@ body{
     border-radius: 10px;
 }
 
+.guest-login{
+    /* background-image: url('./public/images/image-1.jpg'); */
+    background-color: red;
+    height: 100vh;
+}
+
 
 
