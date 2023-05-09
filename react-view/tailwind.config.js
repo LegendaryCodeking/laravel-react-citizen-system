@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{html,js}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'bounce-slow': 'bounce 3s linear infinite',
+      }
+    },
   },
   plugins: [
     require('tailwindcss'),

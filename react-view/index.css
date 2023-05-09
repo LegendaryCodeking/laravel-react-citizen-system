@@ -68,11 +68,12 @@ body{
     border-radius: 10px;
 }
 
-.guest-login{
-    /* background-image: url('./public/images/image-1.jpg'); */
+.login-container{
+    height: 100%;
+    width: 80%;
     background-color: red;
-    height: 100vh;
 }
+
 
 
 

@@ -1,8 +1,8 @@
 import { Children } from "react";
 import {Navigate, createBrowserRouter} from 'react-router-dom'
-import GuestLayout from "./components/GuestLayout";
+import GuestLayout from "./components/Layout/GuestLayout";
 import NotFound from "./view/NotFound";
-import MainLayout from "./components/MainLayout";
+import MainLayout from "./components/Layout/MainLayout";
 import Dashboard from "./view/Dashboard";
 import Login from "./view/Login";
 import Manifest from "./view/Manifest";
@@ -10,18 +10,16 @@ import Sales from "./view/Sales";
 import People from "./view/People";
 import Passengers from "./view/Passengers";
 import Ticketing from "./view/Ticketing";
+import RegistrationLayout from "./components/Layout/RegistrationLayout";
+import Register from "./view/Pages/Register";
 
 const router =  createBrowserRouter ([
     {
-        path: '/auth',
+        path: '/',
         element: <GuestLayout/>,
-        Children: [
+        children: [
             {
-                path: '/auth',
-                element: <Navigate to={'/auth'} />
-            },
-            {
-                path: '/auth',
+                path: '/',
                 element: <Login/>
             }
         ]
@@ -63,6 +61,16 @@ const router =  createBrowserRouter ([
     {
         path: '*',
         element: <NotFound/>
+    },
+    {
+        path: '/registration',
+        element: <RegistrationLayout/>,
+        children:[
+            {
+                path: '/registration',
+                element: <Register/>
+            },
+        ]
     }
 ])
 
