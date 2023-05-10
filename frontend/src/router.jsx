@@ -12,6 +12,7 @@ import Passengers from "./view/Passengers";
 import Ticketing from "./view/Ticketing";
 import RegistrationLayout from "./components/Layout/RegistrationLayout";
 import Register from "./view/Pages/Register";
+import Upload from "./view/Pages/Upload";
 
 const router =  createBrowserRouter ([
     {
@@ -59,19 +60,24 @@ const router =  createBrowserRouter ([
         ]
     },
     {
-        path: '*',
-        element: <NotFound/>
-    },
-    {
-        path: '/registration',
+        path: '/',
         element: <RegistrationLayout/>,
-        children:[
+        children: [
             {
                 path: '/registration',
                 element: <Register/>
             },
+            {
+                path: '/registration-step',
+                element: <Upload/>
+            },
         ]
-    }
+    },
+    {
+        path: '*',
+        element: <NotFound/>
+    },
+    
 ])
 
 export default router

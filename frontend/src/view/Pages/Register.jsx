@@ -1,14 +1,15 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import FormContainer from '../../components/FormContainer'
+import LogoForm from '../../components/LogoForm'
 
 export default function Register() {
   return (
-    <div className='lg:w-[40%] md:w-[90%] sm:w-[90%] sm:px-2 h-fit bg-white rounded shadow-lg flex items-center flex-col'>
+    <FormContainer>
 
         <div className='w-full'>
 
-            <div className='title max-w-sm mx-auto bg-white rounded-xl overflow-hidden sm:max-w-[120px] p-2'>
-                <img src="./public/images/logo-3.png" alt="" className='h-full w-full'/>
-            </div>
+            <LogoForm/>
 
             <form action="" className='px-[50px]'>
                 <h1 className='text-lg font-bold text-[#0755A2]'>Register</h1>
@@ -90,6 +91,7 @@ export default function Register() {
                     <label htmlFor="first_name" class="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Gander</label>
                     <select id="" name="" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Gender</option>
+                        <option value="male" selected>Male</option>
                     </select>
                 </div>
 
@@ -120,11 +122,15 @@ export default function Register() {
                     </div>
                 </div>
 
+                <div className="mb-6 w-full">
+                   <button className='bg-blue-500 text-white w-full p-2 text-lg font-md rounded hover:bg-yellow-500 hover:text-white border hover:border-5-blue-500'>Next</button>
+                </div>
+
             </form>
 
         </div>
 
 
-    </div>
+    </FormContainer>
   )
 }
