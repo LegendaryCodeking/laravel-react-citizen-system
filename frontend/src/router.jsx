@@ -68,7 +68,7 @@ const router =  createBrowserRouter ([
                 element: <Register/>
             },
             {
-                path: '/registration-step',
+                path: '/registration-step/:id',
                 element: <Upload/>
             },
         ]

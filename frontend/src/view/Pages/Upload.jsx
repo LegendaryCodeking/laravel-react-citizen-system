@@ -26,6 +26,22 @@ export default function Upload() {
         });
     }
 
+    const upload = (e) => {
+        e.preventDefault();
+
+        if(front == '' && back == '' && studyLoad == ''){
+            setfrontErrors('Please provide some ID')
+
+            setstudyErrors('Please provide some ID')
+
+            setBackErrors('Please provide some ID')
+
+            toastError('Please provide some ID')
+        }
+    }
+
+   
+
     const setFront = (ev) => {
         _setFront('');
         const file = ev.target.files[0];
@@ -118,7 +134,7 @@ export default function Upload() {
         </div> 
 
         <div className="mb-6 w-[80%]">
-            <button className='bg-blue-500 text-white w-full p-2 text-lg font-md rounded hover:bg-yellow-500 hover:text-white border hover:border-5-blue-500'>Submit</button>
+            <button onClick={upload} className='bg-blue-500 text-white w-full p-2 text-lg font-md rounded hover:bg-yellow-500 hover:text-white border hover:border-5-blue-500'>Submit</button>
         </div>
     </FormContainer>
   )
