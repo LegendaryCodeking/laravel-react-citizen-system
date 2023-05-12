@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Passenger;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PassengerRequest;
+use App\Http\Resources\Passenger\PassengerResource;
 use App\Models\Passenger;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,7 @@ class MangeController extends Controller
         return response(compact('response', 'id'));
     }
 
-    public function index(){
-        return response('hello');
+    public function show(Passenger $passenger){
+        return new PassengerResource($passenger);
     }
 }
