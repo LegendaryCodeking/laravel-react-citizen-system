@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {FiShoppingCart, FiEye,FiUserPlus, FiHome, FiArchive, FiAnchor, FiUsers } from "react-icons/fi";
 import RecentlyAdded from '../components/RecentlyAdded';
+import { useStateContext } from '../Context/ContextProvider';
+import axiosClient from '../axiosClient';
 
 export default function Dashboard() {
+
+  // const {passengers, setPassengers} = useStateContext();
+  
+  // useEffect(() => {
+  //   axiosClient.get('/get-passengers')
+  //     .then(({passengers}) => {
+  //       setPassengers(passengers)
+  //     })
+  // }, [])
+
   return (
     <div>
       <h1 className='text-xl mb-4 font-bold tracking-wide'>Dashboard</h1>

@@ -44,4 +44,13 @@ class MangeController extends Controller
     public function show(Passenger $passenger){
         return new PassengerResource($passenger);
     }
+    
+    public function get_passengers(Passenger $passenger){
+
+        return PassengerResource::collection(
+            $passenger::where('verified', 0)
+                        ->orderBy('id', 'DESC')
+                        ->get()
+        );
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Passenger;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,10 +28,10 @@ class PassengerResource extends JsonResource
             'status' => $this->status,
             'religion' => $this->religion,
             'type' => $this->type,
-            'verified' => $this->verified,
+            'verified' => Carbon::parse($this->verified)->format('m-d-Y'),
             'password' => $this->password,
             'qrcode_hash' => $this->qrcode_hash,
-            'created_at' => $this->created_at,
+            'created_at' => Carbon::parse($this->created_at)->format('m-d-Y'),
             'updated_at' => $this->updated_at,
             'address' => $this->address,
         ];

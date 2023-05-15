@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import {FiShoppingCart, FiInbox,FiUserPlus, FiHome, FiArchive, FiAnchor, FiMessageSquare } from "react-icons/fi";
 import { Link, Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
-export default function SideBar() {
 
-    const [active, setActive] = useState(true)
+export default function SideBar({passengers}) {
+
+    const [active, setActive] = useState(false)
     const [link, setLink] = useState('')
     const [notification_num, setNum] = useState(1)
     const menuItems = [
@@ -60,7 +61,7 @@ export default function SideBar() {
             {/* Sidebar starts */}
             {/* Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] */}
            <div className={(active ? "active" : "") +" absolute transition-all ease-in-out delay-150 md:w-[400px] sm:relative bg-gray-800 shadow md:h-full flex-col justify-between p-0"} id="sidebar">
-            <div className="h-10 w-10 bg-gray-800 absolute right-0 mt-3 -mr-10 flex items-center shadow rounded-tr rounded-br justify-center cursor-pointer" id="mobile-toggler" onClick={sidebarHandler}>
+            <div className="h-10 w-10 bg-blue-700 absolute right-0 mt-3 -mr-10 flex items-center shadow rounded-tr rounded-br justify-center cursor-pointer" id="mobile-toggler" onClick={sidebarHandler}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-adjustments" width={20} height={20} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#FFFFFF" fill="none" strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
                         <circle cx={6} cy={10} r={2} />
@@ -110,7 +111,9 @@ export default function SideBar() {
             </div>
             <div className={(!active && "main") + " content w-full absolute transition-all ease-in-out delay-150"}>
                 <Navbar/>
-                <div className="md:w-full h-full rounded py-5 px-4"><Outlet/></div>
+                <div className="md:w-full h-full rounded py-5 px-4">
+                    <Outlet/>
+                </div>
             </div>
         </div>
     );

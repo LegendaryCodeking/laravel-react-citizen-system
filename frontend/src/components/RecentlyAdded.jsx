@@ -5,7 +5,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import Table from './Table';
 
-export default function RecentlyAdded() {
+export default function RecentlyAdded({data}) {
     let title = 'Requests'
 
     function classNames(...classes) {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Passenger\MangeController;
 use App\Http\Controllers\Passenger\MediaController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::get('/get-passengers', [MangeController::class, 'get_passengers']);
 });
 
 
@@ -34,3 +39,5 @@ Route::post('/store-media', [MediaController::class, 'store']);
 // Route::middleware(['auth:passenger'])->group(function(){
 //     Route::get('/dashboard', [MangeController::class, 'index']);
 // });
+
+Route::post('/user-login', [UserController::class, 'login']);

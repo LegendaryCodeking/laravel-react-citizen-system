@@ -30,17 +30,17 @@ export default function Register() {
   const navigate = useNavigate();
 
   const toastError = (text) => {
-    toast.error(text, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
-    });
-}
+        toast.error(text, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
 
   const onSubmit = (e) => {
     e.preventDefault()

@@ -1,7 +1,10 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import * as FaIcon from "react-icons/fi";
+import Profile from  "../assets/images/profile.png"
+import { useStateContext } from '../Context/ContextProvider';
+import axiosClient from '../axiosClient';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -15,6 +18,16 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+
+  const {setUser, user} = useStateContext()
+
+  useEffect(() => {
+    axiosClient.get('/user')
+      .then(({data}) => {
+        setUser(data)
+      })
+  }, [])
+
   return (
     <div className='navbar'>
       <div className='px-10'>
@@ -30,15 +43,19 @@ export default function Navbar() {
       </button>
       
       <Menu as="div" className="relative ml-3">
-          <div>
+          <div className='flex items-center justify-center gap-2'>
             <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
               <span className="sr-only">Open user menu</span>
               <img
-                className="h-8 w-8 rounded-full outline outline-2  outline-offset-2"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                className="h-9 w-9 rounded-full outline outline-2  outline-offset-2"
+                src={Profile}
                 alt=""
               />
             </Menu.Button>
+            <div className=''>
+              <span className='text-md font-semibold text-gray-600'>{user.last_name} {user.first_name}</span><br />
+              <span className='text-sm font-md text-gray-500 capitalize'>{user.role}</span>
+            </div>
           </div>
           <Transition
             as={Fragment}
