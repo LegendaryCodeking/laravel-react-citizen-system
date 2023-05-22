@@ -11,7 +11,7 @@ export default function TicketingTable({title}) {
     }
 
   return (
-    <div className='bg-white shadow-sm h-fit h-[100%] md:w-full px-5 py-2 rounded'>
+    <div className='bg-white shadow-sm h-fit md:w-full px-5 py-2 rounded'>
        <h1 className='text-md mb-4 font-bold tracking-wide'>{title}</h1>
 
        <div className='flex items-center justify-between mb-4'>

@@ -4,6 +4,7 @@ import Option from './Option';
 import TicketingTable from './Tables/TicketingTable';
 import { useState } from 'react';
 import { useRef } from 'react';
+import ScanModal from './Modals/ScanModal';
 
 export default function Menu() {
 
@@ -41,7 +42,7 @@ export default function Menu() {
                         </div>
                     </td>
                     <td className='text-gray-500 flex items-center cursor-pointer hover:bg-sky-200 p-3'>
-                        <button className='w-full rounded text-gray-500 border border-2-gray-500 hover:bg-sky-500 hover:text-white px-5 py-2 flex items-center'><FaIcon.FiCamera/> &nbsp;Scan QR</button>
+                        <ScanModal/>
                     </td>
                     <td className='text-gray-500 flex items-center cursor-pointer hover:bg-sky-200 p-3'>
                         <button className='w-full rounded text-gray-500 border border-2-gray-500 hover:bg-sky-500 hover:text-white px-5 py-2 flex items-center'><FaIcon.FiPaperclip/> &nbsp;Manual</button>

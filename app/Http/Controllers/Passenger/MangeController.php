@@ -77,7 +77,12 @@ class MangeController extends Controller
 
         if(isset($request->qr)){
             $data =  Passenger::where('qrcode_hash', $request->qr)->first();
-            return json_encode($data);
+            $image = [
+                'back_id' => asset('./storage/'.$data->media->back_id),
+                'front_id' => asset('./storage/'.$data->media->front_id),
+                'selfie' => asset('./storage/'.$data->media->selfie),
+            ];
+            return json_encode(compact('data', 'image'));
             
         }elseif(isset($request->id)){
 
