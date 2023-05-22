@@ -25,11 +25,16 @@ class MediaController extends Controller
             $data['study_load'] = $request->file('study_load')->store('media', 'public');
         }
 
+        if($request->hasFile('selfie')){
+            $data['selfie'] = $request->file('selfie')->store('media', 'public');
+        }
+
         $save_media = Media::create([
             'front_id' => $data['front_id'],
             'back_id' => $data['back_id'],
             'passengers_id' => $data['passengers_id'],
             'study_load' => $data['study_load'],
+            'selfie' => $data['selfie'],
         ]);
 
         if($save_media){

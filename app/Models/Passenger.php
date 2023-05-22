@@ -26,4 +26,8 @@ class Passenger extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function media(){
+        return $this->hasOne(Media::class, 'passengers_id');
+    }
 }

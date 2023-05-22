@@ -13,6 +13,8 @@ import Ticketing from "./view/Ticketing";
 import RegistrationLayout from "./components/Layout/RegistrationLayout";
 import Register from "./view/Pages/Register";
 import Upload from "./view/Pages/Upload";
+import Profile from "./view/Pages/Profile";
+import QrCode from "./view/Pages/QrCode";
 
 const router =  createBrowserRouter ([
     {
@@ -56,6 +58,14 @@ const router =  createBrowserRouter ([
             {
                 path: '/ticketing',
                 element: <Ticketing/>
+            },
+            {
+                path: '/passenger/profile/:id',
+                element: <Profile/>
+            },
+            {
+                path: '/passenger/profile/:id/:tab',
+                element: <Profile/>
             }
         ]
     },
@@ -70,6 +80,10 @@ const router =  createBrowserRouter ([
             {
                 path: '/registration-step/:id',
                 element: <Upload/>
+            },
+            {
+                path: '/qr_code/:qr',
+                element: <QrCode/>
             },
         ]
     },

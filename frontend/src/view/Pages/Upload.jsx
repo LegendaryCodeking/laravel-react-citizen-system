@@ -18,14 +18,17 @@ export default function Upload() {
     const [front, _setFront] = useState('');
     const [back, _setBack] = useState('');
     const [studyLoad, _setStudyLoad] = useState('');
+    const [selfie, _setSelfie] = useState('');
 
     const [front_image, _setFrontImage] = useState('');
     const [back_image, _setBackImage] = useState('');
     const [studyLoad_image, _setStudyLoadImage] = useState('');
+    const [selfie_image, _setSelfieImage] = useState('');
 
     const [backErrors, setBackErrors] = useState('');
     const [frontErrors, setfrontErrors] = useState('');
     const [studyErrors, setstudyErrors] = useState('');
+    const [selfieError, setSelfieError] = useState('');
 
     const [loading, setLoading] = useState(true);
     const [passengers, setPassengers] = useState([]);
@@ -101,7 +104,7 @@ export default function Upload() {
     }
 
     const setStudyLoad = (ev) => {
-        _setStudyLoad();
+        _setStudyLoad('');
         const file = ev.target.files[0];
         const imageType = ['image/jpeg', 'image/jpg', 'image/png'];
 
@@ -111,6 +114,22 @@ export default function Upload() {
             _setStudyLoadImage(ev.target.files[0])
         }else{
             setstudyErrors('This image type is not allowed!')
+            toastError('This image type is not allowed!')
+        }
+        
+    }
+
+    const setSelfie = (ev) => {
+        _setSelfie('');
+        const file = ev.target.files[0];
+        const imageType = ['image/jpeg', 'image/jpg', 'image/png'];
+
+        if(imageType.indexOf(file.type) !== -1){
+            setSelfieError('')
+            _setSelfie(file.name);
+            _setSelfieImage(ev.target.files[0])
+        }else{
+            setSelfieError('This image type is not allowed!')
             toastError('This image type is not allowed!')
         }
         
@@ -126,14 +145,17 @@ export default function Upload() {
         e.preventDefault();
 
 
-        if(front == '' && back == '' && studyLoad == ''){
+        if(front == '' && back == '' && studyLoad == '' && selfie == ''){
             setfrontErrors('Please provide some ID')
 
             setstudyErrors('Please provide some ID')
 
             setBackErrors('Please provide some ID')
 
+            setSelfieError('Please provide a selfie!')
+
             toastError('Please provide some ID')
+
         }else{
             setLoading(true)
 
@@ -142,6 +164,7 @@ export default function Upload() {
                 front_id : front_image,
                 back_id : back_image,
                 study_load : studyLoad_image,
+                selfie : selfie_image,
             }
 
             console.log(data)
@@ -154,6 +177,7 @@ export default function Upload() {
                     _setBack('');
                     _setBackImage('')
                     _setStudyLoad('');
+                    setSelfieError('')
                     _setStudyLoadImage('')
 
                     axiosClient.get(`/get-media?passenger=${id}`)
@@ -176,11 +200,23 @@ export default function Upload() {
     }
 
     if(id){
+        // useEffect(() => {
+        //     axiosClient.get(`/passengers/${id}`)
+        //         .then(({data}) => {
+        //             setLoading(false);
+        //             setPassengers(data.data);
+        //         })
+        //         .catch(() =>{
+        //             setLoading(false);
+        //         })
+        // }, [])
+
         useEffect(() => {
-            axiosClient.get(`/passengers/${id}`)
+            axiosClient.get(`/profile_passengers?id=${id}`)
                 .then(({data}) => {
+                    console.log(data)
                     setLoading(false);
-                    setPassengers(data.data);
+                    setPassengers(data);
                 })
                 .catch(() =>{
                     setLoading(false);
@@ -194,6 +230,19 @@ export default function Upload() {
         <LogoForm/>
         <div className={(loading || success ? 'hidden' : 'block') + ' flex items-center justify-center flex-col w-full'}>
             <h1 className='text-lg font-bold text-[#0755A2] mb-6 uppercase'>{passengers.type} REGISTRATION</h1>
+
+            <h1 className='text-sm font-bold text-[#0755A2] uppercase'>Upload Selfie</h1>
+            <div className="flex items-center justify-center w-[80%] mb-6">
+                <label htmlFor="selfie" className={(!selfieError ? 'border-gray-300' : 'border-red-500') +" flex flex-col items-center justify-center w-full h-50 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"}>
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" rokeLinejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
+                        {!selfie && <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>}
+                        {selfie && <p className="text-xs text-gray-500 dark:text-gray-400">{selfie}</p>}
+                    </div>
+                    <input id="selfie" type="file" className="hidden" onChange={setSelfie} />
+                </label>
+            </div>
 
             <h1 className='text-sm font-bold text-[#0755A2] uppercase'>Upload Front {passengers.type} ID</h1>
             <div className="flex items-center justify-center w-[80%] mb-6">

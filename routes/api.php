@@ -23,6 +23,12 @@ Route::middleware('auth:sanctum')->group(function(){
     });
 
     Route::get('/get-passengers', [MangeController::class, 'get_passengers']);
+
+    Route::get('/get-passengers-approved', [MangeController::class, 'get_passengers_approved']);
+
+    Route::get('profile_passengers', [MangeController::class, 'profile']);
+
+    Route::put('/approve-registration', [MangeController::class, 'approve']);
 });
 
 

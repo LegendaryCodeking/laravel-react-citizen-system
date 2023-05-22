@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {FiShoppingCart, FiInbox,FiUserPlus, FiHome, FiArchive, FiAnchor, FiMessageSquare } from "react-icons/fi";
 import { Link, Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import Logo from '../assets/images/logo-2.jpg'
 
 export default function SideBar({passengers}) {
 
@@ -77,7 +78,7 @@ export default function SideBar({passengers}) {
                 </div>
                 <div className="px-4">
                     <div className="h-16 p-3 w-full flex items-center">
-                        <img src="./public/images/logo-2.jpg" alt="" className="mt-4 w-full rounded"/>
+                        <img src={Logo} alt="" className="mt-4 w-full rounded"/>
                     </div>
                     <ul className="mt-12 transition-all ease-in-out w-full">
                         <li onClick={handleLink} className={(window.location.pathname == '/dashboard' ? "bg-white text-blue-500" : "text-gray-300") + " flex-col py-2 px-2 rounded flex w-full justify-between font-medium hover:bg-white hover:text-blue-500 cursor-pointer  mb-3 transition-all ease-in-out"}>

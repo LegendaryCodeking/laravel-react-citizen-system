@@ -3,12 +3,16 @@ import RecentlyAdded from '../components/RecentlyAdded'
 import Table from '../components/Table'
 import * as FaIcon from "react-icons/fi";
 import Option from '../components/Option';
+import PeopleTable from '../components/Tables/PeopleTable';
 
 export default function People() {
 
   const [checked, setChecked] = useState(false)
   const [search, setSearch] = useState(false)
   const searchInput = useRef()
+
+  const link = '/get-passengers-approved'
+  const title = ''
 
   const multiple_check = () => {
     setChecked(!checked)
@@ -19,7 +23,7 @@ export default function People() {
   }
 
   return (
-    <div className='md:w-full bg-white rounded px-5 py-5 mt-[20px]'>
+    <div className='md:w-full bg-white rounded px-5 py-2 mt-[20px]'>
       <h1 className='text-xl mb-4 font-bold tracking-wide'>People &nbsp;
             <span className="inline-flex items-center rounded-md bg-red-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10">
             20
@@ -36,7 +40,7 @@ export default function People() {
             <option value="">100</option>
           </select>
 
-          <div className='cursor-pointer border rounded-[5px] border-gray-300 flex items-center gap-2 md:px-5 py-2 cursor-pointer text-gray-500'>
+          <div className='border rounded-[5px] border-gray-300 flex items-center gap-2 md:px-5 py-2 cursor-pointer text-gray-500'>
             <input type="checkbox" name="" id="multiple" onChange={multiple_check} />
             <label htmlFor='multiple' className='cursor-pointer'>Select Multiple</label>
           </div>
@@ -70,7 +74,7 @@ export default function People() {
       </div>
         
 
-      <Table checked={checked}/>
+      <RecentlyAdded checked={checked} link={link} title={title}/>
         
     </div>
   )

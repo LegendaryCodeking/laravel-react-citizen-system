@@ -5,6 +5,7 @@ import * as FaIcon from "react-icons/fi";
 import Profile from  "../assets/images/profile.png"
 import { useStateContext } from '../Context/ContextProvider';
 import axiosClient from '../axiosClient';
+import Logo from '../assets/images/logo-3.png'
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -31,7 +32,7 @@ export default function Navbar() {
   return (
     <div className='navbar'>
       <div className='px-10'>
-        <img src="./public/images/logo-1.jpg" alt="" className='h-16 rounded-full' />
+        <img src={Logo} alt="" className='h-16 rounded-full' />
       </div>
 
       <div className='p-5 flex items-center gap-1'>

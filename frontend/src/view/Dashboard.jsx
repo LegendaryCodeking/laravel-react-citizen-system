@@ -7,19 +7,13 @@ import axiosClient from '../axiosClient';
 
 export default function Dashboard() {
 
-  // const {passengers, setPassengers} = useStateContext();
-  
-  // useEffect(() => {
-  //   axiosClient.get('/get-passengers')
-  //     .then(({passengers}) => {
-  //       setPassengers(passengers)
-  //     })
-  // }, [])
+  const link = '/get-passengers'
+  const title = 'Requests'
 
   return (
     <div>
       <h1 className='text-xl mb-4 font-bold tracking-wide'>Dashboard</h1>
-      <div className='dashboard grid sm:grid-cols-4 gap-2'>
+      <div className='dashboard grid sm:grid-cols-4 gap-2 mb-5'>
 
         <div className='bg-white shadow-md border-b-2 border-sky-500 px-3 py-2 flex flex-col'>
 
@@ -75,7 +69,7 @@ export default function Dashboard() {
           </div>
       </div>
 
-      <RecentlyAdded/>
+      <RecentlyAdded link={link} title={title}/>
     </div>
   )
 }

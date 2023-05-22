@@ -7,12 +7,11 @@ import Profile from '../assets/images/profile.png'
 import { useStateContext } from '../Context/ContextProvider';
 import axiosClient from '../axiosClient';
 import Spiral from './Spiral/Spiral';
+import { Link } from 'react-router-dom';
 
-export default function Table({checked}) {
+export default function Table({checked, passengers}) {
 
-   
-    const [passengers, setPassengers] = useState([]);
-    const [loading, setLoading] = useState(true);
+
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
@@ -24,47 +23,21 @@ export default function Table({checked}) {
         alert(id)
     }
   
-    useEffect(() => {
-        getPassengers()
-    }, [])
-
-    const getPassengers = () => {
-        axiosClient.get('/get-passengers')
-        .then(({data}) => {
-            setLoading(false)
-            setPassengers(data.data)
-            console.log(data.data)
-        })
-    }
 
     // console.log(passengers);
 
   return (
-    
+        
+        <>
+           <tbody>
 
-        <table className={(loading ? 'bg-gray-50' : 'bg-gray-100') + ' md:table-auto w-full text-sm'}>
-            <thead className=' py-5'>
-                <tr>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>NAME</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>ADDRESS</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>TYPE</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>DATE</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>OPTIONS</td>
-                </tr>
-            </thead>
-
-            {loading && 
-                <Spiral/>
-            }
-
-            {!loading && <tbody>
-
-            {passengers.map(u => (
-                <tr className='p-5 border border-b-2 hover:bg-gray-300 pointer mb-5'>
+            {passengers ? <>
+                {passengers.map(u => (
+                <tr className={' p-5 border border-b-2 hover:bg-gray-300 pointer mb-5'}>
                 <td className='text-md px-5 py-2 font-medium flex gap-5 items-center'>
                     {checked && <div><input type="checkbox" className='border border-2-gray-500 rounded' name="" id="multiple_check" /></div>}
                     <div>
-                        <img src="./public/images/image-1.jpg" alt="" className='sm:h-10 w-10 rounded-full'/>
+                        <img src={u.selfie} alt="" className='sm:h-10 w-10 rounded-full'/>
                     </div>
                     <div>
                         <span>{u.last_name} {u.first_name}</span><br />
@@ -101,16 +74,17 @@ export default function Table({checked}) {
                     >
                         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
-                            <Menu.Item onClick={(ev) => alert(u.id)} >
+                            <Menu.Item>
                             {({ active }) => (
-                                <button
+                                <Link
                                 className={classNames(
                                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                     'flex items-center px-4 py-2 text-sm w-full'
                                 )}
+                                to={'/passenger/profile/' + u.id + '/details'}
                                 >
                                 <FaIcon.FiEye/>&nbsp; View
-                                </button>
+                                </Link>
                             )}
                             </Menu.Item>
                             <Menu.Item >
@@ -133,7 +107,9 @@ export default function Table({checked}) {
                 </td>
             </tr>
             ))}
-            </tbody>}
-        </table>
+
+            </> : null}
+            </tbody>
+      </>
   )
 }

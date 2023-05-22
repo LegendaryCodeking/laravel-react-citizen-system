@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PassengerResource extends JsonResource
+class PassengerNoMediaRerource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -35,11 +35,6 @@ class PassengerResource extends JsonResource
             'updated_at' => $this->updated_at,
             'address' => $this->address,
             'citizenship' => $this->citizenship,
-
-            'back_id' => asset('./storage/'.$this->media->back_id),
-            'front_id' => asset('./storage/'.$this->media->front_id),
-            'selfie' => asset('./storage/'.$this->media->selfie),
-            'study_load' => asset('./storage/'.$this->media->study_load)
         ];
     }
 }
