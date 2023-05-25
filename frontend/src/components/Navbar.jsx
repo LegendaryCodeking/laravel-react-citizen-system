@@ -6,6 +6,8 @@ import Profile from  "../assets/images/profile.png"
 import { useStateContext } from '../Context/ContextProvider';
 import axiosClient from '../axiosClient';
 import Logo from '../assets/images/logo-3.png'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { useNavigate } from 'react-router-dom';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -14,13 +16,36 @@ const navigation = [
   { name: 'Calendar', href: '#', current: false },
 ]
 
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
 
-  const {setUser, user} = useStateContext()
+  const {setUser, setUserToken, user} = useStateContext()
+
+  const logout = () =>{
+
+    Swal.fire({
+      text: 'Are you sure you want to logout?',
+      showCancelButton: true,
+      confirmButtonColor: 'blue',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      cancelButtonColor: 'red'
+    })
+    .then((result) => {
+        if(result.isConfirmed){
+          axiosClient.post('/admin-logout')
+            .then(() => {
+              setUserToken(null)
+              setUser({})
+            })
+        }
+    })
+
+  }
 
   useEffect(() => {
     axiosClient.get('/user')
@@ -90,7 +115,7 @@ export default function Navbar() {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <a
+                  <a onClick={logout}
                     href="#"
                     className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                   >

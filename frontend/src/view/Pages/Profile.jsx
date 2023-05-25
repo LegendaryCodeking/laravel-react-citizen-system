@@ -58,7 +58,7 @@ export default function Profile() {
                 <img src={passenger.selfie} alt="" className='bg-white h-[150px] w-[150px] rounded-full border border-4 border-white' />
 
                 <div className='mt-[75px] px-2 py-1'>
-                    <h1 className='text-black text-2xl font-lg font-bold capitalize'>{passenger.last_name} {passenger.first_name} {passenger.middle_initial}</h1>
+                    <h1 className='text-black text-2xl font-lg font-bold capitalize'>{passenger.name} {passenger.middle_initial}</h1>
                     <p className='text-gray-500 text-sm'>{passenger.email}</p>
                 </div>
             </div>

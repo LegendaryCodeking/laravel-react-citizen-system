@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function IndentificationTab({passenger}) {
+export default function IndentificationTab({passenger, student = ''}) {
 
   const [show, setShow] = useState(false)
   const [image, setImage] = useState('')
@@ -29,7 +29,7 @@ export default function IndentificationTab({passenger}) {
           </div>
 
           {
-            passenger.type == 'student' && 
+            passenger.type == 'student' || student == 'student' && 
             <div className='w-[200px] h-[80%]'>
               <img onClick={(ev) => openImage(passenger.study_load, 'Study Load')} src={passenger.study_load} alt="" className='cursor-pointer h-full w-full rounded border hover:border-2 hover:border-blue-500' />
               <center><h1 className='text-black text-md font-2xl'>Study Load</h1></center>

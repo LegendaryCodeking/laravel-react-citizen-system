@@ -13,7 +13,7 @@ export default function Dashboard() {
   return (
     <div>
       <h1 className='text-xl mb-4 font-bold tracking-wide'>Dashboard</h1>
-      <div className='dashboard grid sm:grid-cols-4 gap-2 mb-5'>
+      <div className='dashboard grid sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-2 gap-2 mb-5'>
 
         <div className='bg-white shadow-md border-b-2 border-sky-500 px-3 py-2 flex flex-col'>
 

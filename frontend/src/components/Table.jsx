@@ -9,7 +9,7 @@ import axiosClient from '../axiosClient';
 import Spiral from './Spiral/Spiral';
 import { Link } from 'react-router-dom';
 
-export default function Table({checked, passengers}) {
+export default function Table({checked, passengers, string = ''}) {
 
 
 
@@ -32,7 +32,11 @@ export default function Table({checked, passengers}) {
            <tbody>
 
             {passengers ? <>
-                {passengers.map(u => (
+                {passengers.filter((u) => {
+                    return string.toLowerCase() === '' ? u : u.name.toLowerCase().includes(string)
+                })
+                
+               .map(u => (
                 <tr className={' p-5 border border-b-2 hover:bg-gray-300 pointer mb-5'}>
                 <td className='text-md px-5 py-2 font-medium flex gap-5 items-center'>
                     {checked && <div><input type="checkbox" className='border border-2-gray-500 rounded' name="" id="multiple_check" /></div>}
@@ -40,17 +44,17 @@ export default function Table({checked, passengers}) {
                         <img src={u.selfie} alt="" className='sm:h-10 w-10 rounded-full'/>
                     </div>
                     <div>
-                        <span>{u.last_name} {u.first_name}</span><br />
+                        <span>{u.name}</span><br />
                         <span className='text-gray-500'>{u.contact_number}</span>
                     </div>
                 </td>
                 <td className='text-md px-5 py-2x text-gray-500 capitalize'>{u.address}</td>
                 <td className='text-sm px-5 py-2 text-gray-500'>
                     
-                    {u.type == 'student' && <span className='rounded-[10px] bg-gray-300 text-gray-500 px-2 text-sm capitalize'>{u.type}</span>}
-                    {u.type == 'regular' && <span className='rounded-[10px] bg-red-300 text-red-500 px-2 text-sm capitalize'>{u.type}</span>}
-                    {u.type == 'senior' && <span className='rounded-[10px] bg-blue-300 text-blue-500 px-2 text-sm capitalize'>{u.type}</span>}
-                    {u.type == 'pwd' && <span className='rounded-[10px] bg-green-300 text-green-500 px-2 text-sm capitalize'>{u.type}</span>}
+                    {u.type == 'Student' && <span className='rounded-[10px] bg-gray-300 text-gray-500 px-2 text-sm capitalize'>{u.type}</span>}
+                    {u.type == 'Regular' && <span className='rounded-[10px] bg-red-300 text-red-500 px-2 text-sm capitalize'>{u.type}</span>}
+                    {u.type == 'Senior' && <span className='rounded-[10px] bg-blue-300 text-blue-500 px-2 text-sm capitalize'>{u.type}</span>}
+                    {u.type == 'PWD' && <span className='rounded-[10px] bg-green-300 text-green-500 px-2 text-sm capitalize'>{u.type}</span>}
                 </td>
                 <td className='text-md px-5 py-2x text-gray-500'>{u.created_at}</td>
                 <td>

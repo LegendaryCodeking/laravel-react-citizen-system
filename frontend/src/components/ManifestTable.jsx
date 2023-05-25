@@ -33,7 +33,7 @@ export default function () {
                     <td className='text-sm text-gray-500 font-medium px-5 py-2'>#</td>
                     <td className='text-sm text-gray-500 font-medium px-5 py-2'>NAME</td>
                     <td className='text-sm text-gray-500 font-medium px-5 py-2'>AGE</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>GENDER</td>
+                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>Sex</td>
                     <td className='text-sm text-gray-500 font-medium px-5 py-2'>TYPE</td>
                     <td className='text-sm text-gray-500 font-medium px-5 py-2'>DATE</td>
                 </tr>

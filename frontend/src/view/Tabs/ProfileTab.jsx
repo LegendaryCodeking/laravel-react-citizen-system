@@ -8,7 +8,7 @@ export default function ProfileTab({passenger}) {
             <div className='py-3 w-full mb-2 border-b border-gray-200'>
                 <div className='flex items-center gap-5'>
                     <h1 className='text-black text-md font-2xl'>Name:</h1>
-                    <p className='text-gray-500 text-md font-2xl capitalize'>{passenger.last_name} {passenger.first_name} {passenger.middle_initial}</p>
+                    <p className='text-gray-500 text-md font-2xl capitalize'>{passenger.name} {passenger.middle_initial}</p>
                 </div>
             </div>
             <div className='py-3 w-full mb-2 border-b border-gray-200'>

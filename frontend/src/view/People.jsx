@@ -8,7 +8,8 @@ import PeopleTable from '../components/Tables/PeopleTable';
 export default function People() {
 
   const [checked, setChecked] = useState(false)
-  const [search, setSearch] = useState(false)
+  const [search, setSearch] = useState(true)
+  const [searchString, setString] = useState('')
   const searchInput = useRef()
 
   const link = '/get-passengers-approved'
@@ -18,12 +19,16 @@ export default function People() {
     setChecked(!checked)
   }
 
-  const search_width = () => {
-    setSearch(!search)
+  // const search_width = () => {
+  //   setSearch(!search)
+  // }
+
+  const handleSearch = (string) => {
+    setString(string)
   }
 
   return (
-    <div className='md:w-full bg-white rounded px-5 py-2 mt-[20px]'>
+    <div className='md:w-full bg-white rounded px-5 py-2 mt-[2px]'>
       <h1 className='text-xl mb-4 font-bold tracking-wide'>People &nbsp;
             <span className="inline-flex items-center rounded-md bg-red-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10">
             20
@@ -51,7 +56,7 @@ export default function People() {
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-                <input onClick={search_width} ref={searchInput} type="search" id="default-search" className={(search ? 'w-full' : 'w-[50px]') + " transition-all ease-in-out block md:px-5 py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-2"} required />
+                <input onChange={(ev) => handleSearch(ev.target.value)} ref={searchInput} type="search" id="default-search" className={(search ? 'w-[90%]' : 'w-[50px]') + " transition-all ease-in-out block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-2"} placeholder='Search' required />
             </div>
           </div>
         </div>
@@ -74,7 +79,7 @@ export default function People() {
       </div>
         
 
-      <RecentlyAdded checked={checked} link={link} title={title}/>
+      <RecentlyAdded checked={checked} link={link} title={title} string={searchString}/>
         
     </div>
   )

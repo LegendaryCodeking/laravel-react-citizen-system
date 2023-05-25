@@ -36,8 +36,9 @@ export default function QrCode() {
         setLoading(true)
         axiosClient.get(`/profile_passengers?qr=${qr}`)
             .then(({data}) => {
+                console.log(data.data)
                 setLoading(false)
-                setPassenger(data)
+                setPassenger(data.data)
             })
             .catch(err => {
                 setLoading(false)

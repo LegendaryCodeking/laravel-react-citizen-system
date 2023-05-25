@@ -8,7 +8,7 @@ import Table from './Table';
 import PeopleTable from './Tables/PeopleTable';
 import Spiral from './Spiral/Spiral';
 
-export default function RecentlyAdded({data, link, checked = false, title}) {
+export default function RecentlyAdded({data, link, checked = false, title, string}) {
 
     const [passengers, setPassengers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -36,7 +36,7 @@ export default function RecentlyAdded({data, link, checked = false, title}) {
 
 
   return (
-    <div className='md:w-full bg-white rounded px-5 py-2'>
+    <div className='md:w-full bg-white rounded px-2 py-2'>
         <h1 className='text-xl mb-4 font-bold tracking-wide'>{title} &nbsp;
             {title != '' && <span className="inline-flex items-center rounded-md bg-red-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10">
             20
@@ -52,7 +52,7 @@ export default function RecentlyAdded({data, link, checked = false, title}) {
 
 
             {!loading && 
-                <Table passengers={passengers} checked={checked}/>
+                <Table passengers={passengers} checked={checked} string={string}/>
             }
 
         </PeopleTable>

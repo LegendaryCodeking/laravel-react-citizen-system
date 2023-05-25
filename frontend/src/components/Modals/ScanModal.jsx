@@ -6,18 +6,21 @@ import axiosClient from '../../axiosClient';
 import { useNavigate } from 'react-router-dom';
 import ProfileTab from '../../view/Tabs/ProfileTab';
 import IndentificationTab from '../../view/Tabs/IndentificationTab';
+import ChairModal from './ChairModal';
 
 
-export default function ScanModal() {
+export default function ScanModal({date}) {
     const [show, setShow] = useState(false)
     const [showProfile, setShowProfile] = useState(false)
     const [loading, setLoading] = useState(false)
     const [tab, setTab] = useState('')
+    const [manifest_id, setManifestId] = useState(null)
 
     const [qrscan, setQrscan] = useState('No result');
     const [qrCodeData, setQrCodeData] = useState(null);
     const [passenger, setPassenger] = useState([])
     const [media, setMedia] = useState([])
+    const [chair, setChair] = useState(false)
 
     const navigate = useNavigate()
 
@@ -30,14 +33,43 @@ export default function ScanModal() {
         })
       }
 
+    const hideLoadingToast = () => {
+      Swal.fire({
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.hideLoading()
+        }
+      })
+    }
+
+    const alertMessage = (text, icon) =>{
+      Swal.fire({
+        icon: icon,
+        text: text,
+        showConfirmButton: true,
+        confirmButtonColor: 'red'
+      })
+    }
+
     const handleScan = (result) => {
       
-       setLoading(true)
+        Swal.fire({
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        })
        setShow(false)
 
         axiosClient.get(`/profile_passengers?qr=${result}`)
             .then(({data}) => {
                // setLoading(false)
+
+               Swal.fire({
+                title: data.data.last_name + ' ' + data.data.first_name,
+                didOpen: () => {
+                  Swal.hideLoading()
+                }
+              })
                setTab('details')
                console.log(data)
                 setPassenger(data.data)
@@ -55,7 +87,73 @@ export default function ScanModal() {
         setTab(ev)
         
     }
+
+    const handleNext = () => {
+
+      var data = {}
+
+      Swal.fire({
+        text: 'Continue Booking as?',
+        input: 'select',
+        inputOptions: {
+          'student' : 'Student',
+          'regular' : 'Rugular',
+          'senior' : 'Senior',
+          'pwd' : 'PWD',
+        },
+        inputPlaceholder: passenger.type,
+        showCancelButton: true,
+        cancelButtonColor: 'red',
+        confirmButtonColor: 'blue',
+        confirmButtonText: 'Continue',
+        inputValidator: (value) => {
+          return new Promise((resolve) => {
+            if (value !== '') {
+              //value has change
+              data = {
+                'passengers_id': passenger.id,
+                'manifest_dates_id': date,
+                'type': value
+              }
+              
+            } else {
+              //no change of value
+              data = {
+                'passengers_id': passenger.id,
+                'manifest_dates_id': date,
+                'type': passenger.type
+              }
+            }
+            axiosClient.post('/store-manifest-data', data)
+              .then(({data}) => {
+                console.log(data)
+                if(data.status == 200){
+                  resolve()
+                  setManifestId(data.id)
+                  setShowProfile(false)
+                  setChair(true)
+                }
+                if(data.status == 422){
+                  hideLoadingToast()
+                  alertMessage('Something went wrong, please try again!', 'error')
+                }
+
+                if(data == 403){
+                  alertMessage('Passenger already booked!', 'warning')
+                }
+              })
+              .catch(err => {
+                console.log(err)
+                hideLoadingToast()
+                alertMessage('Something went wrong, please try again!', 'warning')
+              })
+
+          })
+        }
+      })
+    }
   
+    console.log(date)
 
     // if(loading){
     //     loadingToast('Processing....')
@@ -108,13 +206,6 @@ export default function ScanModal() {
                     onClick={(ev) => setShow(false)}
                   >
                     Close
-                  </button>
-                  <button
-                    className="bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    // onClick={() => setShow(false)}
-                  >
-                    Sign In
                   </button>
                 </div>
               </div>
@@ -170,7 +261,7 @@ export default function ScanModal() {
                                         }
 
                                         {
-                                            tab == 'identification' && <IndentificationTab passenger={media}/>
+                                            tab == 'identification' && <IndentificationTab passenger={media} student={passenger.type}/>
                                         }
                                     </div>
                                 </div>
@@ -190,7 +281,60 @@ export default function ScanModal() {
                         <button
                             className="bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            // onClick={() => setShow(false)}
+                            onClick={handleNext}
+                        >
+                            Next
+                        </button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+            </> : null
+        }
+
+        {chair ?
+            <>
+                <div
+                    className="delay-150 transition-all ease-in-out justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                >
+                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                    {/*content*/}
+                    <div className="border-0 rounded-lg shadow-3xl relative flex flex-col w-[900px] bg-white outline-none focus:outline-none">
+                        {/*header*/}
+                        <div className="flex items-start justify-between p-2 border-b border-solid bg-blue-500 border-slate-200 rounded-t">
+                        <h3 className="text-lg text-white font-semibold">
+                            <span className='capitalize'>ASSIGN SEATS</span>
+                        </h3>
+                        <button
+                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                            onClick={() => setShow(false)}
+                        >
+                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                            ×
+                            </span>
+                        </button>
+                        </div>
+                        {/*body*/}
+                        <div className="relative p-6 flex-auto bg-gray-200">
+                            <div className='w-full bg-white shadow-md flex items-center justify-center p-5 rounded'>
+                               <ChairModal manifest_id={manifest_id}/>
+                            </div>
+
+                        </div>
+                        {/*footer*/}
+                        <div className="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
+                        <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={(ev) => setChair(false)}
+                        >
+                            Close
+                        </button>
+                        <button
+                            className="bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            
                         >
                             Next
                         </button>

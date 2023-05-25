@@ -61,7 +61,7 @@ export default function SideBar({passengers}) {
         <div className="flex flex-no-wrap relative">
             {/* Sidebar starts */}
             {/* Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] */}
-           <div className={(active ? "active" : "") +" absolute transition-all ease-in-out delay-150 md:w-[400px] sm:relative bg-gray-800 shadow md:h-full flex-col justify-between p-0"} id="sidebar">
+           <div className={(active ? "active" : "") +" absolute transition-all ease-in-out delay-150 md:w-[200px] sm:relative bg-gray-800 shadow md:h-full flex-col justify-between p-0"} id="sidebar">
             <div className="h-10 w-10 bg-blue-700 absolute right-0 mt-3 -mr-10 flex items-center shadow rounded-tr rounded-br justify-center cursor-pointer" id="mobile-toggler" onClick={sidebarHandler}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-adjustments" width={20} height={20} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#FFFFFF" fill="none" strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
@@ -77,15 +77,15 @@ export default function SideBar({passengers}) {
                     </svg>
                 </div>
                 <div className="px-4">
-                    <div className="h-16 p-3 w-full flex items-center">
+                    <div className="h-16 p-3 flex items-center">
                         <img src={Logo} alt="" className="mt-4 w-full rounded"/>
                     </div>
                     <ul className="mt-12 transition-all ease-in-out w-full">
-                        <li onClick={handleLink} className={(window.location.pathname == '/dashboard' ? "bg-white text-blue-500" : "text-gray-300") + " flex-col py-2 px-2 rounded flex w-full justify-between font-medium hover:bg-white hover:text-blue-500 cursor-pointer  mb-3 transition-all ease-in-out"}>
+                        <li onClick={handleLink} className={(window.location.pathname == '/dashboard' ? "bg-white text-blue-500" : "text-white") + " flex-col py-2 px-2 rounded flex w-full justify-between font-medium hover:bg-white hover:text-blue-500 cursor-pointer  mb-1 transition-all ease-in-out"}>
                             <Link to={'dashboard'} className="text-md">
                             <div className="flex items-center">
                                 <FiHome/>
-                                <span className="text-md tracking-wider ml-2">Dashboard &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                <span className="text-sm tracking-wider ml-2">Dashboard &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
                                     <span className={(notification_num == 0 ? 'hidden' : 'block') + " inline-flex items-center rounded-md bg-red-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10"}>
                                     {notification_num}
@@ -96,11 +96,11 @@ export default function SideBar({passengers}) {
                         </li>
                         {
                             menuItems.map((items, key) => (
-                                <li onClick={handleLink} key={key} className={(link == items.link ? "bg-white text-blue-500" : "text-gray-300") + " flex-col py-2 px-2 rounded flex w-full justify-between font-medium hover:bg-white hover:text-blue-500 cursor-pointer  mb-3 transition-all ease-in-out"}>
-                                    <Link to={items.link} className="text-md">
+                                <li onClick={handleLink} key={key} className={(link == items.link ? "bg-white text-blue-500" : "text-white") + " flex-col py-2 px-2 rounded flex w-full justify-between font-medium hover:bg-white hover:text-blue-500 cursor-pointer  mb-3 transition-all ease-in-out"}>
+                                    <Link to={items.link} className="text-sm">
                                     <div className="flex items-center">
                                         {items.icon}
-                                        <span className="text-md tracking-wider ml-2">{items.title}</span>
+                                        <span className="text-sm tracking-wider ml-2">{items.title}</span>
                                     </div>
                                     </Link>
                                 </li>

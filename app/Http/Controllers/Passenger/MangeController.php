@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PassengerRequest;
 use App\Http\Resources\Passenger\PassengerNoMediaRerource;
 use App\Http\Resources\Passenger\PassengerResource;
+use App\Models\ManifestAction;
+use App\Models\ManifestDate;
 use App\Models\Media;
 use App\Models\Passenger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use PharIo\Manifest\Manifest;
 
 class MangeController extends Controller
 {
@@ -81,6 +84,7 @@ class MangeController extends Controller
                 'back_id' => asset('./storage/'.$data->media->back_id),
                 'front_id' => asset('./storage/'.$data->media->front_id),
                 'selfie' => asset('./storage/'.$data->media->selfie),
+                'study_load' => asset('./storage/'.$data->media->study_load),
             ];
             return json_encode(compact('data', 'image'));
             
@@ -161,5 +165,13 @@ class MangeController extends Controller
                 'message-error' => 'error'
             ], 422);
         }
+    }
+
+    public function get_action(){
+        $manifest = ManifestAction::where('id', 1)->first();
+        $action = $manifest->action;
+        $manifestDate = ManifestDate::where('status', 0)->first();
+
+        return response(compact('action', 'manifestDate'));
     }
 }

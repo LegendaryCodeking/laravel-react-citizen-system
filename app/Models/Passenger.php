@@ -30,4 +30,8 @@ class Passenger extends Authenticatable
     public function media(){
         return $this->hasOne(Media::class, 'passengers_id');
     }
+
+    public function manifest(){
+        return $this->hasMany(ManifestData::class);
+    }
 }

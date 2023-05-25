@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\ManifestController;
+use App\Http\Controllers\Chair\ChairController;
 use App\Http\Controllers\Passenger\MangeController;
 use App\Http\Controllers\Passenger\MediaController;
 use App\Http\Controllers\User\UserController;
@@ -24,11 +26,27 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('/get-passengers', [MangeController::class, 'get_passengers']);
 
+    Route::get('/manifest-action', [MangeController::class, 'get_action']);
+
     Route::get('/get-passengers-approved', [MangeController::class, 'get_passengers_approved']);
 
     Route::get('profile_passengers', [MangeController::class, 'profile']);
 
     Route::put('/approve-registration', [MangeController::class, 'approve']);
+
+    Route::post('/store-manifest', [ManifestController::class, 'store']);
+
+    Route::post('/store-manifest-data', [ManifestController::class, 'store_manifest_data']);
+
+    Route::post('/admin-logout', [UserController::class, 'logout']);
+
+    Route::post('/insert-set', [UserController::class, 'insert_set']);
+
+    Route::get('/get-sets', [ChairController::class, 'get_sets']);
+
+    Route::get('/get-passenger-manifest', [ManifestController::class, 'passengers']);
+
+    Route::put('/assign-set', [ChairController::class, 'assign_set']);
 });
 
 

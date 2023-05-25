@@ -183,19 +183,19 @@ export default function Register() {
 
                 <div className="flex gap-3">
                     <div className="flex gap-2">
-                        <input onChange={(ev) => setType(ev.target.value)} id="regular" type="radio" value="regular" name="default-radio" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                        <input onChange={(ev) => setType(ev.target.value)} id="regular" type="radio" value="Regular" name="default-radio" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                         <label htmlFor="regular" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Regular</label>
                     </div>
                     <div className="flex gap-2">
-                        <input onChange={(ev) => setType(ev.target.value)} id="student" type="radio" value="student" name="default-radio" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                        <input onChange={(ev) => setType(ev.target.value)} id="student" type="radio" value="Student" name="default-radio" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                         <label htmlFor="student" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Student</label>
                     </div>
                     <div className="flex gap-2">
-                        <input onChange={(ev) => setType(ev.target.value)} id="senior" type="radio" value="senior" name="default-radio" className=""/>
+                        <input onChange={(ev) => setType(ev.target.value)} id="senior" type="radio" value="Senior" name="default-radio" className=""/>
                         <label htmlFor="senior" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Senior</label>
                     </div>
                     <div className="flex gap-2">
-                        <input onChange={(ev) => setType(ev.target.value)} id="pwd" type="radio" value="pwd" name="default-radio" className=""/>
+                        <input onChange={(ev) => setType(ev.target.value)} id="pwd" type="radio" value="PWD" name="default-radio" className=""/>
                         <label htmlFor="pwd" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">PWD</label>
                     </div>
                 </div>

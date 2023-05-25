@@ -72,7 +72,7 @@ export default function Upload() {
         const imageType = ['image/jpeg', 'image/jpg', 'image/png'];
         console.log(file.type)
 
-        if(passengers.type == 'regular' || passengers.type == 'pwd' || passengers.type == 'senior'){
+        if(passengers.type == 'Regular' || passengers.type == 'PWD' || passengers.type == 'Senior'){
             _setStudyLoadImage(ev.target.files[0])
         }
 
