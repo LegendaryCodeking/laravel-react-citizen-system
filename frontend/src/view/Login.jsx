@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import axiosClient from '../axiosClient';
 import { useStateContext } from '../Context/ContextProvider';
 import { ToastContainer, toast } from 'react-toastify';
+import logo from "../assets/images/logo-2.jpg"
 import * as FaIcon from 'react-icons/fa'
 
 export default function Login() {
@@ -70,7 +71,7 @@ export default function Login() {
       <div className='mt-2 flex flex-col items-center shadow-md md:h-[90%] sm:h-screen sm:w-screen sm:px-0 sm:py-0 lg:w-[35%] bg-gradient-to-b from-[#4f46e5] to-[#4f46e5] rounded-[10px]'>
 
           <div className='flex items-center justify-center py-10 px-3'>
-            <img src="./public/images/logo-2.jpg" alt="" className='h-[90px] rounded'/>
+            <img src={logo} alt="" className='h-[90px] rounded'/>
           </div>
 
           <center><h1 className='mt-[10px] text-gray-200 text-4xl font-medium tracker-wide'>Welcome Back</h1></center>
