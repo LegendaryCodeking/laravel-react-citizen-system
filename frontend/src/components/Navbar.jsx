@@ -3,7 +3,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import * as FaIcon from "react-icons/fi";
 import Profile from  "../assets/images/profile.png"
-import { useStateContext } from '../Context/ContextProvider';
+import  {useStateContext}  from '../Context/ContextProvider';
 import axiosClient from '../axiosClient';
 import Logo from '../assets/images/logo-3.png'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -21,9 +21,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Navbar() {
+export default function Navbar({user}) {
 
-  const {setUser, setUserToken, user} = useStateContext()
+  const {setUser, setUserToken} = useStateContext()
 
   const logout = () =>{
 
@@ -47,12 +47,7 @@ export default function Navbar() {
 
   }
 
-  useEffect(() => {
-    axiosClient.get('/user')
-      .then(({data}) => {
-        setUser(data)
-      })
-  }, [])
+  
 
   return (
     <div className='navbar'>

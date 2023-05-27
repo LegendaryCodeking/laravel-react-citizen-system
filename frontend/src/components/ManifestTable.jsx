@@ -13,7 +13,7 @@ export default function () {
 
   return (
     <div className='bg-white shadow-sm h-fit h-[100%] md:w-full px-5 py-2 rounded'>
-       <h1 className='text-md mb-4 font-bold tracking-wide'>Manifest: <span className='font-sm'>05-03-2023</span></h1>
+       <h1 className='text-md mb-4 font-bold tracking-wide'>Binalayan West</h1>
 
        <div className='flex items-center justify-between mb-4'>
             <label for="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -24,18 +24,16 @@ export default function () {
                 <input type="search" id="default-search" onClick={search_width} className={(search ? 'w-[90%]' : 'w-[50px]') + " transition-all ease-in-out block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-2"} required />
             </div>
 
-            <button className='rounded text-gray-500 border border-2-gray-500 hover:bg-sky-500 hover:text-white px-5 py-2 flex items-center'><FaIcon.FiPrinter/> &nbsp;Print</button>
+            <button className='flex justify-center items-center bg-blue-500 text-white rounded px-2 py-2 hover:bg-gray-600 font-semibold text-md gap-1'><FaIcon.FiPlusCircle/>Register Barangay</button>
         </div>
 
-       <table className='md:table-auto w-full bg-gray-100 text-sm'>
-            <thead className=' py-5'>
+       <table className='md:table-auto w-full text-sm'>
+            <thead className=' py-5 bg-gray-100'>
                 <tr>
                     <td className='text-sm text-gray-500 font-medium px-5 py-2'>#</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>NAME</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>AGE</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>Sex</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>TYPE</td>
-                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>DATE</td>
+                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>Contact Person</td>
+                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>Address</td>
+                    <td className='text-sm text-gray-500 font-medium px-5 py-2'>Action</td>
                 </tr>
             </thead>
 
@@ -52,15 +50,11 @@ export default function () {
                         </div>
                     </td>
                     <td className='text-sm px-5 py-2 text-gray-500'>
-                        <span>25</span>
+                        <span>Binalayan West, Maripipi, Biliran</span>
                     </td>
                     <td className='text-sm px-5 py-2 text-gray-500'>
                         <span>MALE</span>
                     </td>
-                    <td className='text-sm px-5 py-2 text-gray-500'>
-                        <span className='rounded-[10px] bg-gray-300 text-red-500 px-2 text-sm'>STUDENT</span>
-                    </td>
-                    <td className='text-md px-5 py-2x text-gray-500'>05-03-2023</td>
                 </tr>
             </tbody>
        </table>

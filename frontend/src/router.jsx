@@ -8,7 +8,6 @@ import Login from "./view/Login";
 import Manifest from "./view/Manifest";
 import Sales from "./view/Sales";
 import People from "./view/People";
-import Passengers from "./view/Passengers";
 import Ticketing from "./view/Ticketing";
 import RegistrationLayout from "./components/Layout/RegistrationLayout";
 import Register from "./view/Pages/Register";
@@ -16,6 +15,8 @@ import Upload from "./view/Pages/Upload";
 import Profile from "./view/Pages/Profile";
 import QrCode from "./view/Pages/QrCode";
 import ValidationPage from "./view/Pages/ValidationPage";
+import Seniors from "./view/Seniors";
+import AddSenior from "./view/Pages/AddSenior";
 
 const router =  createBrowserRouter ([
     {
@@ -41,7 +42,7 @@ const router =  createBrowserRouter ([
                 element: <Dashboard/>
             },
             {
-                path: '/manifest',
+                path: '/barangay',
                 element: <Manifest/>
             },
             {
@@ -53,8 +54,12 @@ const router =  createBrowserRouter ([
                 element: <People/>
             },
             {
-                path: '/passengers',
-                element: <Passengers/>
+                path: '/seniors',
+                element: <Seniors/>
+            },
+            {
+                path: '/seniors/add-senior',
+                element: <AddSenior/>
             },
             {
                 path: '/ticketing',

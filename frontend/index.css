@@ -17,7 +17,7 @@ body{
 
 
 #sidebar{
-    background: linear-gradient(#4f46e5, #4f46e5);
+    background: #ffff;
     width: 300px;
     height: 100%;
     position: fixed;
@@ -29,7 +29,7 @@ body{
 .main{
     position: absolute;
     right: 0;
-    width: 80.1%;
+    width: 80.5%;
 }
 
 .profile {
@@ -38,7 +38,7 @@ body{
 
 .navbar{
     height: 70px;
-    background-color: rgb(246, 245, 245);
+    background-color: #ffff;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -62,8 +62,7 @@ body{
 
 .dashboard div{
     height: 100px;
-    width: 100%;
-    border-radius: 10px;
+    /* //width: 100%; */
 }
 
 

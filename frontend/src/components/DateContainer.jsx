@@ -11,7 +11,7 @@ export default function DateContainer() {
 
   return (
     <div className='bg-white shadow-sm h-fit h-[100%] md:w-[40%] px-5 py-2 rounded'>
-       <h1 className='text-md mb-4 font-bold tracking-wide'>Date</h1>
+       <h1 className='text-md mb-4 font-bold tracking-wide'>Barangay</h1>
 
        <div className='flex items-center justify-between'>
             <label for="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -22,7 +22,10 @@ export default function DateContainer() {
                 <input type="search" id="default-search" onClick={search_width} className={(search ? 'w-[80%]' : 'w-[50px]') + " transition-all ease-in-out block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-2"} required />
             </div>
 
-            <button className='rounded text-gray-500 border border-2-gray-500 hover:bg-sky-500 hover:text-white px-5 py-2 flex items-center'><FaIcon.FiCalendar/> &nbsp;Calender</button>
+            <select name="" id="" className='border rounded-[5px] border-gray-300 text-gray-500'>
+                  <option value="" selected hidden>Filter</option>
+                  <option value="">Maripipi</option>
+            </select>
         </div>
 
         <table className='md:table-auto w-full text-sm mt-2'>
@@ -34,17 +37,8 @@ export default function DateContainer() {
 
             <tbody>
               <tr>
-                <td className='bg-sky-200 text-gray-500 flex items-center cursor-pointer hover:bg-sky-200 p-3'>
-                  <FaIcon.FiCalendar/>&nbsp; May 5, 2023
-                </td>
-                <td className='text-gray-500 flex items-center cursor-pointer hover:bg-sky-200 p-3'>
-                  <FaIcon.FiCalendar/>&nbsp; May 6, 2023
-                </td>
-                <td className='text-gray-500 flex items-center cursor-pointer hover:bg-sky-200 p-3'>
-                  <FaIcon.FiCalendar/>&nbsp; May 7, 2023
-                </td>
-                <td className='text-gray-500 flex items-center cursor-pointer hover:bg-sky-200 p-3'>
-                  <FaIcon.FiCalendar/>&nbsp; May 8, 2023
+                <td className='bg-blue-200 rounded text-blue-500 font-semibold flex items-center cursor-pointer hover:bg-sky-200 p-3'>
+                  <FaIcon.FiHome/>&nbsp; Binalayan West, Maripipi, Biliran
                 </td>
               </tr>
             </tbody>
