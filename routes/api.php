@@ -34,6 +34,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('/barangays', [MangeController::class, 'get_barangays']);
 
+    Route::get('/barangay', [MangeController::class, 'get_barangays']);
+
     Route::get('/manifest-action', [MangeController::class, 'get_action']);
 
     Route::get('/get-passengers-approved', [MangeController::class, 'get_passengers_approved']);
@@ -59,6 +61,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
 Route::post('/register', [MangeController::class, 'insert']);
+
+Route::post('/insert-register', [MangeController::class, 'insertRegister']);
 
 Route::apiResource('/passengers', MangeController::class);
 

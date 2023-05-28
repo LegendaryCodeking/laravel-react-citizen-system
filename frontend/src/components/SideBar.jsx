@@ -24,7 +24,7 @@ export default function SideBar({passengers}) {
             link: '/seniors'
         },
         {
-            title: 'Users', 
+            title: 'Updates', 
             icon: <FiUserPlus/>,
             link: '/people',
         },

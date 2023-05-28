@@ -21,18 +21,18 @@ export default function RecentlyAdded({data, link, checked = false, title, strin
         alert(id)
     }
 
-    useEffect(() => {
-        getPassengers()
-    }, [])
+    // useEffect(() => {
+    //     getPassengers()
+    // }, [])
 
-    const getPassengers = () => {
-        axiosClient.get(link)
-        .then(({data}) => {
-            setLoading(false)
-            setPassengers(data.data)
-            console.log(data.data)
-        })
-    }
+    // const getPassengers = () => {
+    //     axiosClient.get(link)
+    //     .then(({data}) => {
+    //         setLoading(false)
+    //         setPassengers(data.data)
+    //         console.log(data.data)
+    //     })
+    // }
 
 
   return (
@@ -45,7 +45,7 @@ export default function RecentlyAdded({data, link, checked = false, title, strin
 
         <PeopleTable>
 
-            
+{/*             
             {loading && 
                 <Spiral/>
             }
@@ -53,7 +53,7 @@ export default function RecentlyAdded({data, link, checked = false, title, strin
 
             {!loading && 
                 <Table passengers={passengers} checked={checked} string={string}/>
-            }
+            } */}
 
         </PeopleTable>
 

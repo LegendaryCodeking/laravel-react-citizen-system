@@ -15,16 +15,19 @@ class BarangayResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->barangay_name,
+            "id" => $this->id,
             "barangay_name" => $this->barangay_name,
             "contact_number" => $this->contact_number,
             "contact_person" => $this->contact_person,
             "person_contact_number" => $this->person_contact_number,
             "email" => $this->email,
-            "logoImage" => $this->logoImage,
+            "logoImage" => asset('storage/'.$this->logoImage),
             "barangay" => $this->barangay,
             "province" => $this->province,
             "city" => $this->city,
+            "created_at" => $this->created_at->format('m-d-Y'),
+
+            "password" => $this->password
         ];
     }
 }

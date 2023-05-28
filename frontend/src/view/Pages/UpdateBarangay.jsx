@@ -10,15 +10,15 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-export default function AddBarangay() {
+export default function UpdateBarangay() {
 
-    const barangay_name = useRef()
-    const contact_number = useRef()
-    const contact_person = useRef()
-    const person_contact_number = useRef()
-    const email = useRef()
-    const username = useRef()
-    const password = useRef()
+    const [barangay_name, setBarangayName] = useState()
+    const [contact_number, setContNumber] = useState()
+    const [contact_person, setContactPerson] = useState()
+    const [person_contact_number, setPersonContactNumber] = useState()
+    const [email, setEmail] = useState()
+    const [username] = useState()
+    const [password] = useState()
 
     const [loading, setLoading] = useState(false)
     const [barangay, setBarangay] = useState(''); 
@@ -32,6 +32,8 @@ export default function AddBarangay() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [errors, setErrors] = useState([]);
     const navigate = useNavigate()
+
+    const [password_value, setPassword] = useState()
 
     let {id} = useParams()
     const [barangayData, setBarangayData] = useState([])
@@ -106,11 +108,11 @@ export default function AddBarangay() {
         e.preventDefault();
         setLoading(true)
         const data = {
-            barangay_name: barangay_name.current.value ,
-            contact_number: contact_number.current.value , 
-            contact_person: contact_person.current.value,  
-            person_contact_number: person_contact_number.current.value,  
-            email: email.current.value,  
+            barangay_name: barangay_name ,
+            contact_number: contact_number, 
+            contact_person: contact_person,  
+            person_contact_number: person_contact_number,  
+            email: email,  
             logoImage: logoImage,
             barangay:barangay,
             province:province,
@@ -150,16 +152,31 @@ export default function AddBarangay() {
      
     } 
 
+    useEffect(() => {
+        setLoading(true)
+        axiosClient.get(`/barangay?id=${id}`)
+            .then(({data}) => {
+                setLoading(false)
+                console.log(data)
+                setBarangayData(data.data[0])
+            })
+            .catch(() => {
+                setLoading(false)
+            })
+    }, [])
+
+    console.log(barangayData.logoImage);
+
     
 
   return (
     <>
-        <PaneBody title='Register Brangay'>
+        <PaneBody title='Update Brangay'>
             <div className=' mt-10 border-2 border-gray-100 shadow-sm rounded p-5'>
                 <form action="">
 
                     <div className='bg-gray-100 sm:p-2 h-[200px] w-full rounded flex flex-col justify-center items-center'>
-                    <img src={selectedImage  ? selectedImage : image} className='w-20 h-20 rounded-full' alt="" />
+                    <img src={selectedImage ? selectedImage : barangayData.logoImage} className='w-20 h-20 rounded-full' alt="" />
                       
                         <p className='font-semibold text-md text-gray-500'>Image must be a type of jpg, png</p>
 
@@ -178,22 +195,22 @@ export default function AddBarangay() {
                         <div className='grid gap-6 mb-6 md:grid-cols-2'>
                             <div>
                                 <label for="barangay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay Name</label>
-                                <input ref={barangay_name} type="text" id="first_name" class={(errors.barangay_name && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Barangay name" />
+                                <input value={barangayData.barangay_name} onChange={(ev) => setBarangayName(ev.target.value)} type="text" id="first_name" class={(errors.barangay_name && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Barangay name" />
                             </div>
 
                             <div>
                                 <label for="contact" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number</label>
-                                <input ref={contact_number} type="number" id="first_name" class={(errors.contact_number && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Contact Number" />
+                                <input value={barangayData.contact_number} onChange={(ev) => setContNumber(ev.target.value)} type="number" id="first_name" class={(errors.contact_number && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Contact Number" />
                             </div>
 
                             <div>
                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay Contact Person</label>
-                                <input ref={contact_person} type="text" id="first_name" class={(errors.contact_person && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Barangay Contact Person" />
+                                <input value={barangayData.contact_person} onChange={(ev) => setContactPerson(ev.target.value)} type="text" id="first_name" class={(errors.contact_person && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Barangay Contact Person" />
                             </div>
 
                             <div>
                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Person Contact Number</label>
-                                <input ref={person_contact_number} type="number" id="first_name" class={(errors.person_contact_number && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Barangay Contact Person" />
+                                <input value={barangayData.person_contact_number} onChange={(ev) => setPersonContactNumber(ev.target.value)} type="number" id="first_name" class={(errors.person_contact_number && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Barangay Contact Person" />
                             </div>
 
                         </div>
@@ -202,7 +219,7 @@ export default function AddBarangay() {
                             <div>
                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province</label>
                                 <select onChange={(ev) => setProvince(ev.target.value)} type="number" id="first_name" class={(errors.province && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "}>
-                                    <option value="" selected hidden>Province</option>
+                                    <option value={barangayData.province} selected hidden>{barangayData.province}</option>
                                     <option value="Biliran"  >Biliran</option>
                                 </select>
                             </div>
@@ -210,7 +227,7 @@ export default function AddBarangay() {
                             <div>
                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipality</label>
                                 <select onChange={(ev) => setCity(ev.target.value)} type="number" id="first_name" class={(errors.city && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "}>
-                                    <option value="" selected hidden>Municipality</option>
+                                <option value={barangayData.city} selected hidden>{barangayData.city}</option>
                                     <option value="Maripipi"  >Maripipi</option>
                                 </select>
                             </div>
@@ -218,7 +235,7 @@ export default function AddBarangay() {
                             <div>
                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay</label>
                                 <select onChange={(ev) => setBarangay(ev.target.value)} type="number" id="first_name" class={(errors.barangay && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "}>
-                                    <option value="" selected hidden>Barangay</option>
+                                <option value={barangayData.barangay} selected hidden>{barangayData.barangay}</option>
                                     <option value="Binalayan West">Binalayan West</option>
                                 </select>
                             </div>
@@ -226,14 +243,14 @@ export default function AddBarangay() {
 
                         <div>
                             <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                            <input ref={email} type="text" id="first_name" class={(errors.email && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Contact Email" />
+                            <input value={barangayData.email} onChange={(ev) => setEmail(ev.target.value)} type="text" id="first_name" class={(errors.email && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Contact Email" />
                         </div>
 
                         <div className='grid gap-6 mb-6 md:grid-cols-2 mt-5'>
 
                             <div>
                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                <input ref={password} type="password" id="first_name" class={(errors.password && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Enter Password" />
+                                <input value={barangayData.password} type="password" id="first_name" class={(errors.password && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder="Enter Password" />
                             </div>
                         </div>
 

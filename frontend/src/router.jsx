@@ -19,6 +19,7 @@ import Seniors from "./view/Seniors";
 import AddSenior from "./view/Pages/AddSenior";
 import AddBarangay from "./view/Pages/AddBarangay";
 import AddBarangayUser from "./view/Pages/AddBarangayUser";
+import UpdateBarangay from "./view/Pages/UpdateBarangay";
 
 const router =  createBrowserRouter ([
     {
@@ -66,6 +67,10 @@ const router =  createBrowserRouter ([
             {
                 path: '/barangay/add-barangay',
                 element: <AddBarangay/>
+            },
+            {
+                path: '/barangay/edit-barangay/:id',
+                element: <UpdateBarangay/>
             },
             {
                 path: '/people/add-barangay-user',

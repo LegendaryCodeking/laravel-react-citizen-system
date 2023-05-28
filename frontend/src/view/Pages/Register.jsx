@@ -16,6 +16,9 @@ export default function Register() {
   const contactNumber = useRef();
   const citizenship_input = useRef();
   const religion_input = useRef();
+  const emergency_contact_person = useRef(''); 
+  const emergency_contact_number = useRef('');
+  const birthplace = useRef(''); 
 
   const [province, setProvince] = useState()
   const [city, setCity] = useState()
@@ -23,11 +26,20 @@ export default function Register() {
   const [date, setDate] = useState()
   const [gender_input, setGender] = useState()
   const [status, setStatus] = useState()
-  const [type, setType] = useState()
-
+  const [pension, setPension] = useState(0)
+  const [hasPension, setHasPension] = useState(false)
+ 
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([]);
+  const [monthlyPension, setMonthlyPension] = useState(0);
   const navigate = useNavigate();
+
+  const handlePension = (ev) => {
+    setHasPension(!hasPension)
+    if(hasPension){
+        setPension(ev)
+    }
+  }
 
   const toastError = (text) => {
         toast.error(text, {
@@ -45,24 +57,28 @@ export default function Register() {
   const onSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
-    const add = brgy +' '+' '+ city +' '+ province
     const data = {
         first_name: firstname.current.value,
         last_name: lastname.current.value,
         email: email_input.current.value,
         contact_number: contactNumber.current.value,
-        middle_initial: middleInitial.current.value,
         gender: gender_input,
         religion: religion_input.current.value,
         citizenship: citizenship_input.current.value,
         age: age_input.current.value,
         birthdate: date,
         status: status,
-        type: type,
-        address: add
+        barangay: brgy,
+        city: city,
+        province: province,
+        emergency_contact_person: emergency_contact_person.current.value,  
+        emergency_contact_number: emergency_contact_number.current.value,
+        birthplace: birthplace.current.value,  
+        monthlyPension: monthlyPension,
+        pension: pension
     }
 
-    axiosClient.post('/register', data)
+    axiosClient.post('/insert-register', data)
         .then(({data}) => {
             setLoading(false)
             if(data.response === 200){
@@ -94,16 +110,29 @@ export default function Register() {
 
                 <div className='mt-5 mb-6'>
                     <label htmlFor="first_name" class="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Name</label>
-                    <div className='grid gap-2 mb-6 md:grid-cols-3 lg:grid-cols-[200px_minmax(200px,_1fr)_100px]'>
+                    <div className='grid gap-2 mb-6 md:grid-cols-2'>
                         <div>
                             <input ref={firstname} type="text" id="first_name" className={(errors.last_name ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} placeholder="Last Name"/>
                         </div>
                         <div>
                             <input ref={lastname} type="text" id="last_name" className={(errors.first_name ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} placeholder="First Name"/>
                         </div>
-                        <div className='lg:w-[60px]'>
-                            <input ref={middleInitial} type="text" id="company" className={(errors.middle_initial ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} placeholder="MI"/>
-                        </div>  
+                   
+                    </div>
+                </div>
+
+                <div className='mb-6'>
+                    
+                    <div className='grid gap-2 mb-6 md:grid-cols-2'>
+                        <div>
+                        <label htmlFor="first_name" class="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Emergency Contact Person</label>
+                            <input ref={emergency_contact_person} type="text" id="first_name" className={(errors.emergency_contact_person ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} placeholder="Emergency Contact Person"/>
+                        </div>
+                        <div>
+                        <label htmlFor="first_name" class="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Emergency Contact Number</label>
+                            <input ref={emergency_contact_number} type="number" id="last_name" className={(errors.emergency_contact_number ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} placeholder="Emergency Contact Number"/>
+                        </div>
+                   
                     </div>
                 </div>
 
@@ -116,19 +145,19 @@ export default function Register() {
                     <label for="first_name" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Address</label>
                     <div className='grid gap-2 mb-6 md:grid-cols-3'>
                         <div>
-                            <select onChange={(ev) => setProvince(ev.target.value)}  id="" name="" className={(errors.address ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}>
+                            <select onChange={(ev) => setProvince(ev.target.value)}  id="" name="" className={(errors.province ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}>
                                 <option value="" selected>Provice</option>
                                 <option value="biliran">Biliran</option>
                             </select>
                         </div>
                         <div>
-                            <select onChange={(ev) => setCity(ev.target.value)} id="" name="" className={(errors.address ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}>
+                            <select onChange={(ev) => setCity(ev.target.value)} id="" name="" className={(errors.city ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}>
                                 <option value="" selected>City/Municipality</option>
                                 <option value="maripipi">Maripipi</option>
                             </select>
                         </div>
                         <div className=''>
-                            <select onChange={(ev) => setBrgy(ev.target.value)} id="" name="" className={(errors.address ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}>
+                            <select onChange={(ev) => setBrgy(ev.target.value)} id="" name="" className={(errors.barangay ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}>
                                 <option value="" selected>Barangay</option>
                                 <option value="binalayan west">Binalayan West</option>
                             </select>
@@ -144,6 +173,11 @@ export default function Register() {
                 <div className="mb-6">
                     <label htmlFor="first_name" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Birthdate</label>
                     <input onChange={(ev) => setDate(ev.target.value)} type="date" id="first_name" className={(errors.birthdate ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} placeholder="09**********"/>
+                </div>
+
+                <div className="mb-6">
+                    <label htmlFor="first_name" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Birthplace</label>
+                    <input ref={birthplace} type="text" id="first_name" className={(errors.birthplace ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} placeholder="Birthplace"/>
                 </div>
 
 
@@ -175,34 +209,24 @@ export default function Register() {
                     <label htmlFor="first_name" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Status</label>
                     <select onChange={(ev) => setStatus(ev.target.value)} id="" name="" className={(errors.status ? 'border-red-500' : 'border-gray-300') + " bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}>
                         <option value="" selected>Status</option>
-                        <option value="Single" selected>Single</option>
-                        <option value="Married" selected>Married</option>
-                        <option value="Widow" selected>Widow</option>
+                        <option value="Active" selected>Active</option>
+                        <option value="Deceased" selected>Deceased</option>
                     </select>
                 </div>
 
-                <div className="flex gap-3">
-                    <div className="flex gap-2">
-                        <input onChange={(ev) => setType(ev.target.value)} id="regular" type="radio" value="Regular" name="default-radio" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                        <label htmlFor="regular" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Regular</label>
-                    </div>
-                    <div className="flex gap-2">
-                        <input onChange={(ev) => setType(ev.target.value)} id="student" type="radio" value="Student" name="default-radio" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                        <label htmlFor="student" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Student</label>
-                    </div>
-                    <div className="flex gap-2">
-                        <input onChange={(ev) => setType(ev.target.value)} id="senior" type="radio" value="Senior" name="default-radio" className=""/>
-                        <label htmlFor="senior" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">Senior</label>
-                    </div>
-                    <div className="flex gap-2">
-                        <input onChange={(ev) => setType(ev.target.value)} id="pwd" type="radio" value="PWD" name="default-radio" className=""/>
-                        <label htmlFor="pwd" className="block mb-2 text-sm font-medium  text-[#0755A2] dark:text-white">PWD</label>
-                    </div>
+                <div className='flex gap-2 items-center mb-6'>
+                    <input onChange={(ev) => handlePension(ev.target.value)} type="checkbox" name='withpension' value="1" id='pension'/>
+                    <label htmlFor="pension">With Pension</label>
                 </div>
-                <p className='text-sm text-red-500 animate-pulse'>{errors.type}</p>
+
+              
+                {hasPension && <div id='monthlyPension'>
+                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Monthly Pension</label>
+                    <input type="number" onChange={(ev) => setMonthlyPension(ev.target.value)} id="first_name" class={(errors.monthlyPension && 'border-2 border-red-500') + " bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "} placeholder='Monthly Pension'/>
+                </div>}
 
                 <div className="mb-6 mt-6 w-full">
-                   <button className={(loading ? 'cursor-not-allowed' : 'bg-blue-500') + ' active:bg-gray-100 text-white w-full p-2 text-lg font-md rounded hover:bg-yellow-500 hover:text-white border hover:border-5-blue-500'}>
+                   <button className={(loading ? 'cursor-not-allowed' : 'bg-[#00ac54]') + ' active:bg-gray-100 text-white w-full p-2 text-lg font-md rounded hover:bg-blue-500 hover:text-white border hover:border-5-blue-500'}>
                       
                         <div className='flex items-center justify-center gap-2'>
 

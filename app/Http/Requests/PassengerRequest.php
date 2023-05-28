@@ -28,13 +28,18 @@ class PassengerRequest extends FormRequest
             'citizenship' => 'required',
             'age' => 'required',
             'religion' => 'required',
-            'type' => 'required',
             'gender' => 'required',
-            'contact_number' => 'required',
-            'address' => 'required',
-            'middle_initial' => 'required',
+            'contact_number' => 'required|unique:passengers,contact_number',
+            "barangay" => 'required',
+            "province" => 'required',
+            "city" => 'required',
             'birthdate' => 'required',
             'status' => 'required',
+            "emergency_contact_person" => 'required',
+            "emergency_contact_number" => 'required',
+            "monthlyPension" => 'required',  
+            "birthplace" => 'required',
+            "pension" => 'required',
         ];
     }
 }

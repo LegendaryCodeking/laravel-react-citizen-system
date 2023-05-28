@@ -4,12 +4,15 @@ import FormContainer from '../../components/FormContainer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosClient from '../../axiosClient';
-import { Navigate, useAsyncError, useParams } from 'react-router-dom';
+import { Navigate, useAsyncError, useNavigate, useParams } from 'react-router-dom';
 import Success from '../../components/Layout/Success';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 export default function Upload() {
     
     let {id} = useParams();
+
+    const navigate = useNavigate();
 
     if(!id){
         return <Navigate to={'/registration'}/>
@@ -72,10 +75,6 @@ export default function Upload() {
         const imageType = ['image/jpeg', 'image/jpg', 'image/png'];
         console.log(file.type)
 
-        if(passengers.type == 'Regular' || passengers.type == 'PWD' || passengers.type == 'Senior'){
-            _setStudyLoadImage(ev.target.files[0])
-        }
-
         if(imageType.indexOf(file.type) !== -1){
             setfrontErrors('')
             _setFront(file.name);
@@ -103,21 +102,6 @@ export default function Upload() {
 
     }
 
-    const setStudyLoad = (ev) => {
-        _setStudyLoad('');
-        const file = ev.target.files[0];
-        const imageType = ['image/jpeg', 'image/jpg', 'image/png'];
-
-        if(imageType.indexOf(file.type) !== -1){
-            setstudyErrors('')
-            _setStudyLoad(file.name);
-            _setStudyLoadImage(ev.target.files[0])
-        }else{
-            setstudyErrors('This image type is not allowed!')
-            toastError('This image type is not allowed!')
-        }
-        
-    }
 
     const setSelfie = (ev) => {
         _setSelfie('');
@@ -145,7 +129,7 @@ export default function Upload() {
         e.preventDefault();
 
 
-        if(front == '' && back == '' && studyLoad == '' && selfie == ''){
+        if(front == '' && back == ''  && selfie == ''){
             setfrontErrors('Please provide some ID')
 
             setstudyErrors('Please provide some ID')
@@ -163,7 +147,6 @@ export default function Upload() {
                 passengers_id : id,
                 front_id : front_image,
                 back_id : back_image,
-                study_load : studyLoad_image,
                 selfie : selfie_image,
             }
 
@@ -180,15 +163,18 @@ export default function Upload() {
                     setSelfieError('')
                     _setStudyLoadImage('')
 
-                    axiosClient.get(`/get-media?passenger=${id}`)
-                        .then(({data}) => {
-                            setLoading(false)
-                            setSuccess(true)
-                            setPassengerDataSuccess(data.data)
-                        })  
-                        .catch((error) => {
-                            console.log(error)
-                        })
+                    Swal.fire({
+                        text: 'Senior registered successfully! Please wait 2-3 working days to complete the validation! We will send confirmation to your email account',
+                        icon: 'success',
+                        showConfirmButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: 'blue'
+                    }).then((action) => {
+                        if(action.isConfirmed){
+                            navigate('/registration')
+                        }
+                    })
                 })
                 .catch((error) => {
                     setLoading(false)
@@ -229,7 +215,7 @@ export default function Upload() {
         <ToastContainer/>
         <LogoForm/>
         <div className={(loading || success ? 'hidden' : 'block') + ' flex items-center justify-center flex-col w-full'}>
-            <h1 className='text-lg font-bold text-[#0755A2] mb-6 uppercase'>{passengers.type} REGISTRATION</h1>
+            <h1 className='text-lg font-bold text-[#0755A2] mb-6 uppercase'>Upload ID</h1>
 
             <h1 className='text-sm font-bold text-[#0755A2] uppercase'>Upload Selfie</h1>
             <div className="flex items-center justify-center w-[80%] mb-6">
@@ -244,7 +230,7 @@ export default function Upload() {
                 </label>
             </div>
 
-            <h1 className='text-sm font-bold text-[#0755A2] uppercase'>Upload Front {passengers.type} ID</h1>
+            <h1 className='text-sm font-bold text-[#0755A2] uppercase'>Upload Front Senior Citizen ID</h1>
             <div className="flex items-center justify-center w-[80%] mb-6">
                 <label htmlFor="dropzone-file" className={(!frontErrors ? 'border-gray-300' : 'border-red-500') +" flex flex-col items-center justify-center w-full h-50 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"}>
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -257,7 +243,7 @@ export default function Upload() {
                 </label>
             </div> 
 
-            <h1 className='text-sm font-bold text-[#0755A2] uppercase'>Upload Back {passengers.type} ID</h1>
+            <h1 className='text-sm font-bold text-[#0755A2] uppercase'>Upload Back Senior Citizen ID</h1>
             <div className="flex items-center justify-center w-[80%] mb-6">
                 <label htmlFor="dropzone-file1" className={(!backErrors ? 'border-gray-300' : 'border-red-500') +" flex flex-col items-center justify-center w-full h-50 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"}>
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -270,24 +256,8 @@ export default function Upload() {
                 </label>
             </div> 
 
-            <div className={(passengers.type == "student" ? 'block' : 'hidden') + " w-[80%] text-center"}>
-                <h1 className='text-sm font-bold text-[#0755A2]'>Upload Clear Image of Study Load</h1>
-                <div className="flex items-center justify-center mb-6">
-                    <label htmlFor="dropzone-file2" className={(!studyErrors ? 'border-gray-300' : 'border-red-500') +" flex flex-col items-center justify-center w-full h-50 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"}>
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" rokeLinejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
-                            {!studyLoad && <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>}
-                            {studyLoad && <p className="text-xs text-gray-500 dark:text-gray-400">{studyLoad}</p>}
-                        </div>
-                        <input id="dropzone-file2" type="file" className="hidden" onChange={setStudyLoad} />
-                    </label>
-                </div> 
-            </div>
-
-
             <div className="mb-6 w-[80%]">
-                <button onClick={upload} className='bg-blue-500 text-white w-full p-2 text-lg font-md rounded hover:bg-yellow-500 hover:text-white border hover:border-5-blue-500'>Submit</button>
+                <button onClick={upload} className='bg-[#00ac54] text-white w-full p-2 text-lg font-md rounded hover:bg-blue-500 hover:text-white border hover:border-5-blue-500'>Submit</button>
             </div>
         </div>
 

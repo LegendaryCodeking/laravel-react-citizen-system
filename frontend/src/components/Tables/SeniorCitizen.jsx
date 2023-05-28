@@ -25,7 +25,7 @@ export default function SeniorTable({children, loading, seniors}) {
           seniors.map(item => (
             <tr key={item.id} className='p-5 border border-b-2 hover:bg-gray-300 pointer mb-5'>
               <td className='text-md px-5 py-2 font-medium flex gap-5 items-center'>
-                  <div>
+                  <div className='sm:hidden lg:block'>
                       <img src={item.profile_image} alt="" className='sm:h-10 w-10 rounded-full'/>
                   </div>
                   <div>

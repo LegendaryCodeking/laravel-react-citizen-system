@@ -1,9 +1,9 @@
 import React from 'react'
-import Logo from '../assets/images/logo-3.png'
+import Logo from '../assets/images/logo-senior.png'
 
 export default function LogoForm() {
   return (
-    <div className='title max-w-sm mx-auto bg-white rounded-xl overflow-hidden sm:max-w-[120px] p-2'>
+    <div className='title max-w-sm mx-auto bg-white rounded-xl overflow-hidden h-[150px] sm:max-w-[500px] p-2'>
         <img src={Logo} alt="" className='h-full w-full'/>
     </div>
   )

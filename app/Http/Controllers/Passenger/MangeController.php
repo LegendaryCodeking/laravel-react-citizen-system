@@ -16,6 +16,7 @@ use App\Models\Media;
 use App\Models\Passenger;
 use App\Models\SeniorCitize\BarangayUser;
 use App\Models\SeniorCitize\Senior;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use PharIo\Manifest\Manifest;
@@ -72,6 +73,40 @@ class MangeController extends Controller
         return response(compact('response'));
     }
 
+    public function insertRegister(PassengerRequest $request){
+        $data = $request->validated();
+
+        $passenger = Senior::create([
+            'last_name' => $data['last_name'],
+            'first_name' => $data['first_name'],
+            'email' => $data['email'],
+            'contact_number' => $data['contact_number'],
+            'age' => $data['age'],
+            'emergency_contact_person' => $data['emergency_contact_person'],
+            'emergency_contact_number' => $data['emergency_contact_number'],
+            'with_pension' => $data['pension'],
+            'gender' => $data['gender'],
+            'monthly_pension' => $data['monthlyPension'],
+            'birthplace' => $data['birthplace'],
+            'birthdate' => $data['birthdate'],
+            'status' => $data['status'],
+            'barangay' => $data['barangay'],
+            'province' => $data['province'],
+            'city' => $data['city'],
+        ]);
+
+        
+        $id = $passenger->id;
+
+        if($passenger){
+            $response = 200;
+        }else{
+            $response = 500;
+        }
+
+        return response(compact('response', 'id'));
+    }
+
     public function store_barangay(BarangayRequest $request){
         $data = $request->validated();
 
@@ -89,7 +124,15 @@ class MangeController extends Controller
             'barangay' => $data['barangay'],
             'province' => $data['province'],
             'city' => $data['city'],
+            'password' => bcrypt($data['password']),
         ]);
+
+        // $store_user = User::create([
+        //     'last_name' => $data['barangay_name'],
+        //     'email' => $data['email'],
+        //     'password' => bcrypt($data['password']),
+        //     'role' => 'official'
+        // ]);
 
         
       
@@ -118,11 +161,26 @@ class MangeController extends Controller
 
     public function get_barangays(){
 
-        $get_media = BarangayUser::all();
+        $get_media = BarangayUser::orderBy('id', 'DESC')->get();
 
         return BarangayResource::collection($get_media);
 
     }
+
+    public function get_barangay(Request $request){
+
+        $get_media = BarangayUser::where('id', $request->id)->orderBy('id', 'DESC')->first();
+        $get_password = User::where('id', 3)->first();
+
+        $data =  BarangayResource::collection($get_media);
+
+        $password = $get_password->password;
+
+     //   return response(compact('data', 'password'));
+
+    }
+
+    
 
     public function get_passengers_approved(Passenger $passenger){
 

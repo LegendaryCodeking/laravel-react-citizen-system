@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
-import Logo from '../../assets/images/logo-2.jpg'
+import Logo from '../../assets/images/logo-senior.png'
 import PassengerLogin from '../Modals/PassengerLogin'
 
 export default function RegistrationNavbar() {
@@ -103,7 +103,7 @@ export default function RegistrationNavbar() {
               {/*content*/}
               <div className="border-0 rounded-lg shadow-3xl relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-2 border-b border-solid bg-blue-500 border-slate-200 rounded-t">
+                <div className="flex items-start justify-between p-2 border-b border-solid bg-[#00ac54] border-slate-200 rounded-t">
                   <h3 className="text-lg text-white font-semibold">
                     SIGN IN
                   </h3>

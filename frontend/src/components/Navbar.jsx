@@ -5,7 +5,7 @@ import * as FaIcon from "react-icons/fi";
 import Profile from  "../assets/images/profile.png"
 import  {useStateContext}  from '../Context/ContextProvider';
 import axiosClient from '../axiosClient';
-import Logo from '../assets/images/logo-3.png'
+import Logo from "../assets/images/logo-senior.png"
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { useNavigate } from 'react-router-dom';
 

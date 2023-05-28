@@ -2,6 +2,7 @@ import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useStateContext } from '../../Context/ContextProvider'
 import { toast, ToastContainer } from 'react-toastify';
+import signup from '../../assets/images/signup.png'
 
 export default function GuestLayout() {
 
@@ -26,9 +27,15 @@ export default function GuestLayout() {
 
 
   return (
-    <div className=' md:w-full md:h-[100vh] bg-[url("./public/background.svg")] bg-no-repeat bg-white' >
+    <div className=' md:w-full md:h-[100vh] bg-white' >
       <ToastContainer/>
-      <Outlet/>
+
+      <div className='flex flex-row gap-2 lg:py-10 sm:py-0'>
+        <div className='w-full items-center justify-between sm:hidden md:flex py-14'>
+          <img src={signup} className='h-full w-full ml-10' alt="" />
+        </div>
+        <Outlet/>
+      </div>
     </div>
   )
 }

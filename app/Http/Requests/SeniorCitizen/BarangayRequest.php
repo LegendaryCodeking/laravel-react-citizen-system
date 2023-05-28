@@ -31,6 +31,8 @@ class BarangayRequest extends FormRequest
             "barangay" =>  "required",
             "province" =>  "required",
             "city" => "required",
+
+            "password" => "required",
         ];
     }
 }

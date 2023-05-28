@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaRequest;
 use App\Http\Resources\Passenger\MediaResource;
 use App\Models\Media;
+use App\Models\SeniorCitize\Senior;
 use Illuminate\Http\Request;
 
 class MediaController extends Controller
@@ -21,28 +22,23 @@ class MediaController extends Controller
             $data['back_id'] = $request->file('back_id')->store('media', 'public');
         }
 
-        if($request->hasFile('study_load')){
-            $data['study_load'] = $request->file('study_load')->store('media', 'public');
-        }
-
         if($request->hasFile('selfie')){
             $data['selfie'] = $request->file('selfie')->store('media', 'public');
         }
 
-        $save_media = Media::create([
-            'front_id' => $data['front_id'],
-            'back_id' => $data['back_id'],
-            'passengers_id' => $data['passengers_id'],
-            'study_load' => $data['study_load'],
-            'selfie' => $data['selfie'],
-        ]);
+        $get_senior = Senior::where('id', $request->passengers_id)->first();
+
+        $get_senior->profile = $data['selfie'];
+        $get_senior->front_id = $data['front_id'];
+        $get_senior->back_id = $data['back_id'];
+
+        $save_media = $get_senior->save();
 
         if($save_media){
             $status = 200;
-            $id = $save_media->id;
         }
 
-        return response(compact('status', 'id'));
+        return response(compact('status'));
     }
 
     public function show(Media $media){
