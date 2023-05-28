@@ -42,7 +42,7 @@ export default function SideBar({passengers}) {
     }
 
     const handleResize = () => {
-        setActive(false)
+       // setActive(true)
     }
 
     const handleLink = () =>{

@@ -1,16 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PaneBody from '../components/PaneBody'
 import SeniorTable from '../components/Tables/SeniorCitizen'
 import * as FaIcon from "react-icons/fi";
 import { Link, Outlet } from "react-router-dom";
+import axiosClient from '../axiosClient';
 
 export default function Seniors() {
 
   const [checked, setChecked] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [seniors, setSeniors] = useState([]);
 
   const multiple_check = () => {
     setChecked(!checked)
   }
+
+  useEffect(() => {
+    setLoading(true)
+    axiosClient.get('/seniors')
+      .then(({data}) => {
+        setLoading(false)
+        setSeniors(data.data)
+      })
+      .catch((err) => {
+        setLoading(false)
+      })
+  }, [])
   return (
     <>
       <PaneBody title='Senior Citizen'>
@@ -60,7 +75,7 @@ export default function Seniors() {
         </div>
 
         <div className='w-full border border-1 border-gray-200 shadow-sm rounded mt-5'>
-          <SeniorTable/>
+          <SeniorTable seniors={seniors} loading={loading}/>
         </div>
       </PaneBody>
     </>

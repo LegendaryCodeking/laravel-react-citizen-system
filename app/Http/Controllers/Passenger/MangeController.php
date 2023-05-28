@@ -4,39 +4,64 @@ namespace App\Http\Controllers\Passenger;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PassengerRequest;
+use App\Http\Requests\SeniorCitizen\BarangayRequest;
+use App\Http\Requests\SeniorCitizen\SeniorRequest;
 use App\Http\Resources\Passenger\PassengerNoMediaRerource;
 use App\Http\Resources\Passenger\PassengerResource;
+use App\Http\Resources\SeniorCitizen\BarangayResource;
+use App\Http\Resources\SeniorCitizen\SeniorResrource;
 use App\Models\ManifestAction;
 use App\Models\ManifestDate;
 use App\Models\Media;
 use App\Models\Passenger;
+use App\Models\SeniorCitize\BarangayUser;
+use App\Models\SeniorCitize\Senior;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use PharIo\Manifest\Manifest;
 
 class MangeController extends Controller
 {
-    public function insert(PassengerRequest $request){
+    public function insert(SeniorRequest $request){
         $data = $request->validated();
 
-        $passenger = Passenger::create([
+        if($request->hasFile('back_id')){
+            $data['back_id'] = $request->file('back_id')->store('media', 'public');
+        }
+
+        if($request->hasFile('profile_image')){
+            $data['profile_image'] = $request->file('profile_image')->store('media', 'public');
+        }
+
+        if($request->hasFile('front_id')){
+            $data['front_id'] = $request->file('front_id')->store('media', 'public');
+        }
+
+
+        $passenger = Senior::create([
             'last_name' => $data['last_name'],
             'first_name' => $data['first_name'],
             'email' => $data['email'],
-            'contact_number' => $data['contact_number'],
-            'middle_initial' => $data['middle_initial'],
-            'gender' => $data['gender'],
-            'religion' => $data['religion'],
-            'citizenship' => $data['citizenship'],
+            'contact_number' => $data['number'],
             'age' => $data['age'],
+            'emergency_contact_person' => $data['emergency_contact_person'],
+            'emergency_contact_number' => $data['emergency_contact_number'],
+            'with_pension' => $data['pension'],
+            'gender' => $data['gender'],
+            'monthly_pension' => $data['monthlyPension'],
+            'birthplace' => $data['birthplace'],
             'birthdate' => $data['birthdate'],
             'status' => $data['status'],
-            'type' => $data['type'],
-            'address' => $data['address'],
-            'qrcode_hash' => rand(100, 1000000),
+            'barangay' => $data['barangay'],
+            'province' => $data['province'],
+            'city' => $data['city'],
+            'front_id' => $data['front_id'],
+            'back_id' => $data['back_id'],
+            'profile' => $data['profile_image'],
         ]);
 
-        $id = $passenger->id;
+        
+      
 
         if($passenger){
             $response = 200;
@@ -44,26 +69,58 @@ class MangeController extends Controller
             $response = 500;
         }
 
-        return response(compact('response', 'id'));
+        return response(compact('response'));
+    }
+
+    public function store_barangay(BarangayRequest $request){
+        $data = $request->validated();
+
+        if($request->hasFile('logoImage')){
+            $data['logoImage'] = $request->file('logoImage')->store('media', 'public');
+        }
+
+        $barangay = BarangayUser::create([
+            'barangay_name' => $data['barangay_name'],
+            'contact_number' => $data['contact_number'],
+            'email' => $data['email'],
+            'contact_person' => $data['contact_person'],
+            'person_contact_number' => $data['person_contact_number'],
+            'logoImage' => $data['logoImage'],
+            'barangay' => $data['barangay'],
+            'province' => $data['province'],
+            'city' => $data['city'],
+        ]);
+
+        
+      
+
+        if($barangay){
+            $response = 200;
+        }else{
+            $response = 500;
+        }
+
+        return response(compact('response'));
+
     }
 
     public function show(Passenger $passenger){
         return new PassengerResource($passenger);
     }
     
-    public function get_passengers(Passenger $passenger){
+    public function get_seniors(){
 
-        $get_media = Media::all();
+        $get_media = Senior::all();
 
-        if(count($get_media) >= 0){
-            return PassengerResource::collection(
-                $passenger::where('verified', 0)
-                            ->orderBy('id', 'DESC')
-                            ->get()
-            );
-        }else{
-           return response(null);
-        }
+        return SeniorResrource::collection($get_media);
+
+    }
+
+    public function get_barangays(){
+
+        $get_media = BarangayUser::all();
+
+        return BarangayResource::collection($get_media);
 
     }
 

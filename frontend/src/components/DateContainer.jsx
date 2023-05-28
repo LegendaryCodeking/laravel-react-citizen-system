@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import * as FaIcon from "react-icons/fi";
 
-export default function DateContainer() {
+export default function DateContainer({address, loading}) {
 
   const [search, setSearch] = useState(false)
 
@@ -31,16 +31,44 @@ export default function DateContainer() {
         <table className='md:table-auto w-full text-sm mt-2'>
             <thead className=' py-5'>
                 <tr>
-                    <td className='text-sm text-gray-500 font-medium py-2'>DATE</td>
+                    <td className='text-sm text-gray-500 font-medium py-2'>Address</td>
                 </tr>
             </thead>
 
             <tbody>
-              <tr>
-                <td className='bg-blue-200 rounded text-blue-500 font-semibold flex items-center cursor-pointer hover:bg-sky-200 p-3'>
-                  <FaIcon.FiHome/>&nbsp; Binalayan West, Maripipi, Biliran
-                </td>
-              </tr>
+              {loading && <>
+                  <tr>
+                    <div className='h-[35px] mb-4 w-full bg-gray-200 rounded p-3 animate-pulse'>
+                      
+                    </div>
+                  </tr>
+                  <tr>
+                    <div className='h-[35px] mb-4 w-full bg-gray-200 rounded p-3 animate-pulse'>
+                      
+                    </div>
+                  </tr>
+                  <tr>
+                    <div className='h-[35px] mb-4 w-full bg-gray-200 rounded p-3 animate-pulse'>
+                      
+                    </div>
+                  </tr>
+                  <tr>
+                    <div className='h-[35px] mb-4 w-full bg-gray-200 rounded p-3 animate-pulse'>
+                      
+                    </div>
+                  </tr>
+                </>}
+
+              {
+                address.map(item => (
+                  <tr key={item.id} className='mb-3'>
+                    <td className='capitalize bg-blue-200 rounded text-blue-500 font-semibold flex items-center cursor-pointer hover:bg-sky-200 p-3'>
+                      <FaIcon.FiHome/>&nbsp; {item.barangay}, {item.city}, {item.province}
+                    </td>
+                  </tr>
+                ))
+              }
+             
             </tbody>
        </table>
     </div>

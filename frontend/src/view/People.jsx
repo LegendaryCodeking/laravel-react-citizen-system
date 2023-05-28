@@ -3,6 +3,7 @@ import PaneBody from '../components/PaneBody'
 import SeniorTable from '../components/Tables/SeniorCitizen'
 import * as FaIcon from "react-icons/fi";
 import UserTable from '../components/Tables/UserTable';
+import {Link} from 'react-router-dom'
 
 export default function People() {
 
@@ -35,7 +36,9 @@ export default function People() {
             </div>
 
             <div className='flex items-center justify-center gap-2'>
-              <button className='flex justify-center items-center bg-blue-500 text-white rounded px-2 py-2 hover:bg-gray-600 font-semibold text-md gap-1'><FaIcon.FiPlusCircle/>Add User</button>
+
+              <Link to={'/people/add-barangay-user'} className='flex justify-center items-center bg-blue-500 text-white rounded px-2 py-2 hover:bg-gray-600 font-semibold text-md gap-1'><FaIcon.FiPlusCircle/>Add User</Link>
+              
               <div>
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div className="relative">
@@ -46,14 +49,6 @@ export default function People() {
                 </div>
               </div>
 
-              <select name="" id="" className='border rounded-[5px] border-gray-300 text-gray-500'>
-                <option value="" selected hidden>Filter</option>
-                <option value="">All</option>
-                <option value="">Student</option>
-                <option value="">Regulars</option>
-                <option value="">Senior</option>
-                <option value="">PWD</option>
-              </select>
             </div>
 
           </div>

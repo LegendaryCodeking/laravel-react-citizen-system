@@ -24,7 +24,15 @@ Route::middleware('auth:sanctum')->group(function(){
         return $request->user();
     });
 
-    Route::get('/get-passengers', [MangeController::class, 'get_passengers']);
+    Route::get('/get-passengers', [MangeController::class, 'get_seniors']);
+
+    Route::get('/seniors', [MangeController::class, 'get_seniors']);
+
+    Route::post('/store-senior', [MangeController::class, 'insert']);
+
+    Route::post('/store-barangay', [MangeController::class, 'store_barangay']);
+
+    Route::get('/barangays', [MangeController::class, 'get_barangays']);
 
     Route::get('/manifest-action', [MangeController::class, 'get_action']);
 

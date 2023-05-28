@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import * as FaIcon from "react-icons/fi";
+import * as FaIcon from "react-icons/fa";
 
-export default function () {
+export default function ManifestTable({barangay_data}) {
 
     const [search, setSearch] = useState(false)
 
     const search_width = () => {
         setSearch(!search)
     }
-  
-
 
   return (
     <div className='bg-white shadow-sm h-fit h-[100%] md:w-full px-5 py-2 rounded'>
@@ -53,7 +51,11 @@ export default function () {
                         <span>Binalayan West, Maripipi, Biliran</span>
                     </td>
                     <td className='text-sm px-5 py-2 text-gray-500'>
-                        <span>MALE</span>
+                        <div className='flex gap-2'>
+                            <button className='bg-blue-500 text-white font-semibold p-2 rounded'><FaIcon.FaEye/></button>
+                            <button className='bg-green-500 text-white font-semibold p-2 rounded'><FaIcon.FaPen/></button>
+                            <button className='bg-red-500 text-white font-semibold p-2 rounded'><FaIcon.FaTrash/></button>
+                        </div>
                     </td>
                 </tr>
             </tbody>

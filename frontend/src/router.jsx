@@ -17,6 +17,8 @@ import QrCode from "./view/Pages/QrCode";
 import ValidationPage from "./view/Pages/ValidationPage";
 import Seniors from "./view/Seniors";
 import AddSenior from "./view/Pages/AddSenior";
+import AddBarangay from "./view/Pages/AddBarangay";
+import AddBarangayUser from "./view/Pages/AddBarangayUser";
 
 const router =  createBrowserRouter ([
     {
@@ -60,6 +62,14 @@ const router =  createBrowserRouter ([
             {
                 path: '/seniors/add-senior',
                 element: <AddSenior/>
+            },
+            {
+                path: '/barangay/add-barangay',
+                element: <AddBarangay/>
+            },
+            {
+                path: '/people/add-barangay-user',
+                element: <AddBarangayUser/>
             },
             {
                 path: '/ticketing',
